@@ -15,7 +15,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with the MOEA Framework.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.moeaframework.algorithm.jmetal.latest;
+package org.moeaframework.algorithm.jmetal;
 
 import java.lang.reflect.Method;
 import java.util.Arrays;
@@ -26,6 +26,11 @@ import java.util.stream.DoubleStream;
 import org.apache.commons.lang3.reflect.MethodUtils;
 import org.apache.commons.lang3.reflect.TypeUtils;
 import org.apache.commons.text.WordUtils;
+import org.moeaframework.algorithm.jmetal.adapters.BinaryProblemAdapter;
+import org.moeaframework.algorithm.jmetal.adapters.DoubleProblemAdapter;
+import org.moeaframework.algorithm.jmetal.adapters.JMetalAlgorithmAdapter;
+import org.moeaframework.algorithm.jmetal.adapters.PermutationProblemAdapter;
+import org.moeaframework.algorithm.jmetal.adapters.ProblemAdapter;
 import org.moeaframework.core.Algorithm;
 import org.moeaframework.core.Problem;
 import org.moeaframework.core.Solution;
@@ -214,13 +219,15 @@ public class JMetalAlgorithms extends RegisteredAlgorithmProvider {
 	}
 	
 	/**
-	 * Dynamically loads properties into JMetal's builder classes.  Some configurable aspects, like
-	 * the mutation and crossover operator and their properties, still must be setup explicitly.
+	 * Uses reflection hackery to simplify setting up parameters using the bean-style design of
+	 * JMetal's builders.  If the builder has a setter {@code setX} that takes a single argument
+	 * of a supported type (int, double, or enum), we check if that property is defined and, if so,
+	 * pass it to the setter.
 	 * 
-	 * This currently supports:
-	 *   1. Setters with int or double arguments
-	 *   2. Setters with enum (provide the enum value as a string, exact matching only!)
-	 *   3. maxIterations automatically derived from maxEvaluations / populationSize
+	 * The builders also have setters for operators.  These must still be set up explicitly.  There is
+	 * unfortunately some inconsistency in the design of JMetal's builders.  Some take arguments in the
+	 * constructor instead of using setters, some builders provide defaults whereas others do not,
+	 * and some algorithms don't have builders and we must call their constructor instead.
 	 * 
 	 * @param properties the given properties
 	 * @param builder the JMetal builder

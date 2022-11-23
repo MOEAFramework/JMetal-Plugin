@@ -15,7 +15,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with the MOEA Framework.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.moeaframework.algorithm.jmetal.latest;
+package org.moeaframework.algorithm.jmetal.adapters;
 
 import java.util.List;
 
@@ -27,9 +27,9 @@ import org.moeaframework.core.variable.Permutation;
 import org.uma.jmetal.problem.permutationproblem.PermutationProblem;
 import org.uma.jmetal.solution.permutationsolution.PermutationSolution;
 import org.uma.jmetal.solution.permutationsolution.impl.IntegerPermutationSolution;
+
 /**
- * {@link ProblemAdapter} for JMetal problems of type {@link PermutationProblem}.  The MOEA Framework
- * problem must contain exactly one permutation decision variable.
+ * Converts a problem with a single permutation decision variable into JMetal's PermutationProblem.
  */
 public class PermutationProblemAdapter extends ProblemAdapter<PermutationSolution<Integer>>
 implements PermutationProblem<PermutationSolution<Integer>> {
@@ -37,9 +37,9 @@ implements PermutationProblem<PermutationSolution<Integer>> {
 	private static final long serialVersionUID = -7658974412222795821L;
 	
 	/**
-	 * Creates a new {@code ProblemAdapter} for the given MOEA Framework problem.
+	 * Creates a new permutation problem adapter.
 	 * 
-	 * @param problem the MOEA Framework problem
+	 * @param problem the problem
 	 */
 	public PermutationProblemAdapter(Problem problem) {
 		super(problem);
@@ -47,11 +47,15 @@ implements PermutationProblem<PermutationSolution<Integer>> {
 		if (schema.getNumberOfVariables() != 1) {
 			throw new FrameworkException("PermutationProblemAdapter only works with a single Permutation variable");
 		}
+		
+		if (problem.getNumberOfConstraints() > 0) {
+			// JMetal's IntegerPermutationSolution doesn't have a constraint input!
+			throw new FrameworkException("PermutationProblemAdapter does not support constraints");
+		}
 	}
 	
 	@Override
 	public PermutationSolution<Integer> createSolution() {
-		// TODO: There's no constraints arg???
 		return new IntegerPermutationSolution(getLength(), getNumberOfObjectives());
 	}
 	
@@ -71,7 +75,7 @@ implements PermutationProblem<PermutationSolution<Integer>> {
 	
 	@Override
 	public int getNumberOfVariables() {
-		return 1;
+		return getLength();
 	}
 	
 	@Override

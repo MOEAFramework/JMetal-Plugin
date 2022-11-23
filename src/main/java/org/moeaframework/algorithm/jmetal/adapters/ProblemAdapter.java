@@ -15,7 +15,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with the MOEA Framework.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.moeaframework.algorithm.jmetal.latest;
+package org.moeaframework.algorithm.jmetal.adapters;
 
 import org.moeaframework.core.Problem;
 import org.moeaframework.core.Solution;

@@ -15,10 +15,33 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with the MOEA Framework.  If not, see <http://www.gnu.org/licenses/>.
  */
+package org.moeaframework.algorithm.jmetal.mocks;
+
+import org.moeaframework.core.Solution;
+import org.moeaframework.core.variable.BinaryVariable;
+import org.moeaframework.problem.AbstractProblem;
 
 /**
- * Adapters for interfacing with the JMetal library.
- * 
- * @see <a href="https://github.com/jMetal/jMetal">JMetal Code Repository</a>
+ * A mock problem with binary variables.  The objective of this problem is to
+ * maximize the number of 1 bits in the binary string.
  */
-package org.moeaframework.algorithm.jmetal.latest;
+public class MockBinaryProblem extends AbstractProblem {
+
+	public MockBinaryProblem() {
+		super(1, 1);
+	}
+
+	@Override
+	public void evaluate(Solution solution) {
+		BinaryVariable binary = (BinaryVariable)solution.getVariable(0);
+		solution.setObjective(0, 10 - binary.cardinality());
+	}
+
+	@Override
+	public Solution newSolution() {
+		Solution solution = new Solution(1, 1);
+		solution.setVariable(0, new BinaryVariable(10));
+		return solution;
+	}
+
+}

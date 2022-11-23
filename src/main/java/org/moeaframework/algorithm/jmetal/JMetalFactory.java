@@ -15,7 +15,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with the MOEA Framework.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.moeaframework.algorithm.jmetal.latest;
+package org.moeaframework.algorithm.jmetal;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.Arrays;
@@ -25,6 +25,10 @@ import java.util.Map;
 import java.util.TreeMap;
 
 import org.apache.commons.lang3.reflect.ConstructorUtils;
+import org.moeaframework.algorithm.jmetal.adapters.BinaryProblemAdapter;
+import org.moeaframework.algorithm.jmetal.adapters.DoubleProblemAdapter;
+import org.moeaframework.algorithm.jmetal.adapters.PermutationProblemAdapter;
+import org.moeaframework.algorithm.jmetal.adapters.ProblemAdapter;
 import org.moeaframework.core.FrameworkException;
 import org.moeaframework.util.TypedProperties;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
@@ -96,7 +100,8 @@ public class JMetalFactory {
 
 		crossoverOperators = new HashMap<Class<? extends ProblemAdapter<?>>, OperatorDescriptor<CrossoverOperator<?>>>();
 		mutationOperators = new HashMap<Class<? extends ProblemAdapter<?>>, OperatorDescriptor<MutationOperator<?>>>();
-		
+		deVariants = new TreeMap<String, DE_VARIANT>(String.CASE_INSENSITIVE_ORDER);
+
 		
 		registerCrossoverOperator(DoubleProblemAdapter.class,
 				SBXCrossover.class,
@@ -122,7 +127,6 @@ public class JMetalFactory {
 				new DoubleParameterDescriptor("swap.rate", 0.35));
 		
 		
-		deVariants = new TreeMap<String, DE_VARIANT>(String.CASE_INSENSITIVE_ORDER);
 	    deVariants.put("rand/1/bin", DE_VARIANT.RAND_1_BIN);
 	    deVariants.put("rand/1/exp", DE_VARIANT.RAND_1_EXP);
 	    deVariants.put("rand/2/bin", DE_VARIANT.RAND_2_BIN);

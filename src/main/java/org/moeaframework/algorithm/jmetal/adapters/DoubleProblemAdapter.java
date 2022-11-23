@@ -15,7 +15,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with the MOEA Framework.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.moeaframework.algorithm.jmetal.latest;
+package org.moeaframework.algorithm.jmetal.adapters;
 
 import java.util.List;
 import java.util.stream.IntStream;
@@ -30,17 +30,16 @@ import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.solution.doublesolution.impl.DefaultDoubleSolution;
 
 /**
- * {@link ProblemAdapter} for JMetal problems of type {@link DoubleProblem}.  The MOEA Framework
- * problem must contain only binary decision variables.
+ * Converts a problem with real-valued decision variables into JMetal's DoubleProblem.
  */
 public class DoubleProblemAdapter extends ProblemAdapter<DoubleSolution> implements DoubleProblem {
 
 	private static final long serialVersionUID = 4011361659496044697L;
 
 	/**
-	 * Creates a new {@code ProblemAdapter} for the given MOEA Framework problem.
+	 * Creates a new real-valued problem adapter.
 	 * 
-	 * @param problem the MOEA Framework problem
+	 * @param problem the problem
 	 */
 	public DoubleProblemAdapter(Problem problem) {
 		super(problem);

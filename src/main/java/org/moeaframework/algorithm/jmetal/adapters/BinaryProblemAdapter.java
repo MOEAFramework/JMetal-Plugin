@@ -15,7 +15,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with the MOEA Framework.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.moeaframework.algorithm.jmetal.latest;
+package org.moeaframework.algorithm.jmetal.adapters;
 
 import java.util.List;
 import java.util.stream.IntStream;
@@ -29,8 +29,7 @@ import org.uma.jmetal.solution.binarysolution.BinarySolution;
 import org.uma.jmetal.solution.binarysolution.impl.DefaultBinarySolution;
 
 /**
- * {@link ProblemAdapter} for JMetal problems of type {@link BinaryProblem}.  The MOEA Framework
- * problem must contain only binary decision variables.
+ * Converts a problem with binary decision variables into JMetal's BinaryProblem.
  */
 public class BinaryProblemAdapter extends ProblemAdapter<BinarySolution> implements BinaryProblem {
 
@@ -42,9 +41,9 @@ public class BinaryProblemAdapter extends ProblemAdapter<BinarySolution> impleme
 	private final int totalNumberOfBits;
 	
 	/**
-	 * Creates a new {@code ProblemAdapter} for the given MOEA Framework problem.
+	 * Creates a new binary problem adapter
 	 * 
-	 * @param problem the MOEA Framework problem
+	 * @param problem the problem
 	 */
 	public BinaryProblemAdapter(Problem problem) {
 		super(problem);
