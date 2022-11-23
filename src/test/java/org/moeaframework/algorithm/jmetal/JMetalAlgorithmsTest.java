@@ -47,57 +47,57 @@ public class JMetalAlgorithmsTest {
 
 	@Test
 	public void testAbYSS() {
-		runTest("AbYSS", new DTLZ2(2));
+		runTest("AbYSS-JMetal", new DTLZ2(2));
 	}
 	
 	@Test
 	public void testCDG() {
-		runTest("CDG", new DTLZ2(2));
+		runTest("CDG-JMetal", new DTLZ2(2));
 	}
 	
 	@Test
 	public void testDMOPSO() {
-		runTest("DMOPSO", new DTLZ2(2));
+		runTest("DMOPSO-JMetal", new DTLZ2(2));
 	}
 	
 	@Test
 	public void testESPEA() {
-		runTest("ESPEA", new DTLZ2(2));
+		runTest("ESPEA-JMetal", new DTLZ2(2));
 	}
 	
 	@Test
 	public void testFAME() {
-		runTest("FAME", new DTLZ2(2));
+		runTest("FAME-JMetal", new DTLZ2(2));
 	}
 	
 	@Test
 	public void testGDE3() {
-		runTest("GDE3", new DTLZ2(2));
+		runTest("GDE3-JMetal", new DTLZ2(2));
 	}
 	
 	@Test
 	public void testGWASFGA() {
-		runTest("GWASFGA", new DTLZ2(2));
+		runTest("GWASFGA-JMetal", new DTLZ2(2));
 	}
 	
 	@Test
 	public void testIBEA() {
-		runTest("IBEA", new DTLZ2(2));
+		runTest("IBEA-JMetal", new DTLZ2(2));
 	}
 	
 	@Test
 	public void testMOCell() {
-		runTest("MOCell", new DTLZ2(2));
+		runTest("MOCell-JMetal", new DTLZ2(2));
 	}
 	
 	@Test
 	public void testMOCHC() {
-		runTest("MOCHC", new ZDT5());
+		runTest("MOCHC-JMetal", new ZDT5());
 	}
 	
 	@Test
 	public void testMOEAD() {
-		runTest("MOEAD", new DTLZ2(2));
+		runTest("MOEAD-JMetal", new DTLZ2(2));
 	}
 	
 	@Test
@@ -105,7 +105,7 @@ public class JMetalAlgorithmsTest {
 		TypedProperties properties = TypedProperties.withProperty("pathWeights",
 				"resources/weightVectorFiles/mombi2/weight_02D_152.sld");
 		
-		runTest("MOMBI", properties, new DTLZ2(2));
+		runTest("MOMBI-JMetal", properties, new DTLZ2(2));
 	}
 	
 	@Test
@@ -113,57 +113,57 @@ public class JMetalAlgorithmsTest {
 		TypedProperties properties = TypedProperties.withProperty("pathWeights",
 				"resources/weightVectorFiles/mombi2/weight_02D_152.sld");
 		
-		runTest("MOMBI2", properties, new DTLZ2(2));
+		runTest("MOMBI2-JMetal", properties, new DTLZ2(2));
 	}
 	
 	@Test
 	public void testMOSA() {
-		runTest("MOSA", new DTLZ2(2));
+		runTest("MOSA-JMetal", new DTLZ2(2));
 	}
 	
 	@Test
 	public void testNSGAII() {
-		runTest("NSGAII", new DTLZ2(2));
+		runTest("NSGAII-JMetal", new DTLZ2(2));
 	}
 	
 	@Test
 	public void testNSGAIII() {
-		runTest("NSGAIII", new DTLZ2(2));
+		runTest("NSGAIII-JMetal", new DTLZ2(2));
 	}
 	
 	@Test
 	public void testOMOPSO() {
-		runTest("OMOPSO", new DTLZ2(2));
+		runTest("OMOPSO-JMetal", new DTLZ2(2));
 	}
 	
 	@Test
 	public void testPAES() {
-		runTest("PAES", new DTLZ2(2));
+		runTest("PAES-JMetal", new DTLZ2(2));
 	}
 	
 	@Test
 	public void testPESA2() {
-		runTest("PESA2", new DTLZ2(2));
+		runTest("PESA2-JMetal", new DTLZ2(2));
 	}
 	
 	@Test
 	public void testRNSGAII() {
-		runTest("RNSGAII", new DTLZ2(2));
+		runTest("RNSGAII-JMetal", new DTLZ2(2));
 	}
 	
 	@Test
 	public void testSMPSO() {
-		runTest("SMPSO", new DTLZ2(2));
+		runTest("SMPSO-JMetal", new DTLZ2(2));
 	}
 	
 	@Test
 	public void testSPEA2() {
-		runTest("SPEA2", new DTLZ2(2));
+		runTest("SPEA2-JMetal", new DTLZ2(2));
 	}
 	
 	@Test
 	public void testWASFGA() {
-		runTest("WASFGA", new DTLZ2(2));
+		runTest("WASFGA-JMetal", new DTLZ2(2));
 	}
 	
 	private void runTest(String algorithmName, TypedProperties properties, Problem problem) {
