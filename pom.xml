@@ -1,0 +1,133 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.moeaframework</groupId>
+	<artifactId>jmetal-plugin</artifactId>
+	<version>5.11</version>
+	<packaging>jar</packaging>
+
+	<name>JMetal Plugin for the MOEA Framework</name>
+	<description>Use JMetal algorithms within the MOEA Framework</description>
+	<url>http://www.moeaframework.org</url>
+
+	<licenses>
+		<license>
+			<name>GNU Lesser General Public License, Version 3</name>
+			<url>http://www.gnu.org/licenses/lgpl.html</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
+
+	<developers>
+		<developer>
+			<id>dhadka</id>
+			<name>David Hadka</name>
+			<email>admin@moeaframework.org</email>
+		</developer>
+	</developers>
+
+	<scm>
+		<url>https://github.com/MOEAFramework/JMetal-Latest</url>
+	</scm>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<maven.compiler.source>18</maven.compiler.source>
+		<maven.compiler.target>18</maven.compiler.target>
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.moeaframework</groupId>
+			<artifactId>moeaframework</artifactId>
+			<version>3.1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.uma.jmetal</groupId>
+			<artifactId>jmetal-algorithm</artifactId>
+			<version>5.11</version>
+		</dependency>
+		<dependency>
+			<groupId>org.uma.jmetal</groupId>
+			<artifactId>jmetal-core</artifactId>
+			<version>5.11</version>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.13.2</version>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>nz.ac.waikato.cms.weka</groupId>
+			<artifactId>weka-stable</artifactId>
+			<version>3.8.5</version>
+			<scope>provided</scope>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<version>3.3.0</version>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-source-plugin</artifactId>
+				<version>3.2.1</version>
+				<executions>
+					<execution>
+						<id>attach-sources</id>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>3.4.1</version>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-shade-plugin</artifactId>
+				<version>3.3.0</version>
+				<configuration>
+					<shadedArtifactAttached>true</shadedArtifactAttached>
+					<shadedClassifierName>jar-with-dependencies</shadedClassifierName>
+					<artifactSet>
+						<excludes>
+							<exclude>org.moeaframework:moeaframework</exclude>
+							<exclude>org.junit:junit</exclude>
+							<exclude>nz.ac.waikato.cms.weka:weka-stable</exclude>
+							<exclude>org.knowm.xchart:xchart</exclude>
+							<exclude>org.hamcrest:hamcrest</exclude>
+							<exclude>org.springframework:spring-test</exclude>
+							<exclude>org.mockito:mockito-core</exclude>
+							<exclude>commons-io:commons-io</exclude>
+							<exclude>org.apache.commons:commons-math3</exclude>
+							<exclude>org.apache.commons:commons-lang3</exclude>
+							<exclude>org.junit.jupiter:junit-jupiter-engine</exclude>
+							<exclude>org.junit.vintage:junit-vintage-engine</exclude>
+						</excludes>
+					</artifactSet>
+				</configuration>
+				<executions>
+					<execution>
+						<id>make-assembly</id>
+						<phase>package</phase>
+						<goals>
+							<goal>shade</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+</project>
