@@ -108,24 +108,24 @@ public class JMetalAlgorithms extends RegisteredAlgorithmProvider {
 		register(this::newDMOPSO, "DMOPSO", "DMOPSO-JMetal");
 		register(this::newESPEA, "ESPEA", "ESPEA-JMetal");
 		register(this::newFAME, "FAME", "FAME-JMetal");
-		register(this::newGDE3, "GDE3", "GDE3-JMetal");
+		register(this::newGDE3, "GDE3-JMetal");
 		register(this::newGWASFGA, "GWASFGA", "GWASFGA-JMetal");
-		register(this::newIBEA, "IBEA", "IBEA-JMetal");
+		register(this::newIBEA, "IBEA-JMetal");
 		register(this::newMOCell, "MOCell", "MOCell-JMetal");
 		register(this::newMOCHC, "MOCHC", "MOCHC-JMetal");
-		register(this::newMOEAD, "MOEAD", "MOEAD-JMetal");
+		register(this::newMOEAD, "MOEAD-JMetal");
 		register(this::newMOMBI, "MOMBI", "MOMBI-JMetal");
 		register(this::newMOMBI2, "MOMBI2", "MOMBI2-JMetal");
 		register(this::newMOSA, "MOSA", "MOSA-JMetal");
-		register(this::newNSGAII, "NSGAII", "NSGAII-JMetal");
-		register(this::newNSGAIII, "NSGAIII", "NSGAIII-JMetal");
-		register(this::newOMOPSO, "OMOPSO", "OMOPSO-JMetal");
-		register(this::newPAES, "PAES", "PAES-JMetal");
-		register(this::newPESA2, "PESA2", "PESA2-JMetal");
+		register(this::newNSGAII, "NSGAII-JMetal");
+		register(this::newNSGAIII, "NSGAIII-JMetal");
+		register(this::newOMOPSO, "OMOPSO-JMetal");
+		register(this::newPAES, "PAES-JMetal");
+		register(this::newPESA2, "PESA2-JMetal");
 		register(this::newRNSGAII, "RNSGAII", "RNSGAII-JMetal");
-		register(this::newSMPSO, "SMPSO", "SMPSO-JMetal");
-		register(this::newSMSEMOA, "SMSEMOA", "SMSEMOA-JMetal");
-		register(this::newSPEA2, "SPEA2", "SPEA2-JMetal");
+		register(this::newSMPSO, "SMPSO-JMetal");
+		register(this::newSMSEMOA, "SMSEMOA-JMetal");
+		register(this::newSPEA2, "SPEA2-JMetal");
 		register(this::newWASFGA, "WASFGA", "WASFGA-JMetal");
 	}
 
