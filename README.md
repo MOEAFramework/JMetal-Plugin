@@ -30,6 +30,11 @@ NondominatedPopulation result = new Executor()
 		.run();
 ```
 
+## Limitations
+
+Some functionality may not be available for JMetal algorithms.  This includes the ability to instrument algorithms
+to collect runtime data.  JMetal algorithms only generate the end-of-run Pareto approximation set.
+
 ## License
 
 Copyright 2009-2022 David Hadka and other contributors.  All rights reserved.
