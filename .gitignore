@@ -1,3 +1,4 @@
 .settings/
 target/
 jMetal.log
+dependency-reduced-pom.xml

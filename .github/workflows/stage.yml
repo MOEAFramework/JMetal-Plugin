@@ -25,15 +25,25 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: Set up JDK 16
+      - name: Set up JDK 8
         uses: actions/setup-java@v2
         with:
-          java-version: 16
+          java-version: 8
           distribution: temurin
+      - name: Install required software
+        run: |
+          sudo apt install xmlstarlet
+      - name: Get project settings
+        run: |
+          shortname=$(xmlstarlet sel -N x="http://maven.apache.org/POM/4.0.0" -t -v "//x:project/x:artifactId/text()" pom.xml)
+          version=$(xmlstarlet sel -N x="http://maven.apache.org/POM/4.0.0" -t -v "//x:project/x:version/text()" pom.xml)
+          echo "BUILD_NAME=${shortname}" >> $GITHUB_ENV
+          echo "BUILD_VERSION=${version}" >> $GITHUB_ENV
+          echo "BUILD_ARTIFACT=${shortname}-${version}" >> $GITHUB_ENV
       - name: Validate version number
         if: ${{ ! inputs.skip_validation }}
         run: |
-          [ "${{ inputs.version }}" == "$(cat pom.xml | grep -m 1 '<version>' | tr -d '<>/[:alpha:][:space:]')" ] || (>&2 echo "Version does not match value in pom.xml"; exit -1)
+          [ "${{ inputs.version }}" == "${BUILD_VERSION}" ] || (>&2 echo "Version does not match value in pom.xml"; exit -1)
           [ "${{ inputs.version }}" == "$(cat README.md | grep -m 1 '<version>' | tr -d '<>/[:alpha:][:space:]')" ] || (>&2 echo "Version does not match value in README.md"; exit -1)
       - name: Build artifact
         run: mvn package javadoc:jar
@@ -41,21 +51,22 @@ jobs:
         if: ${{ inputs.publish_maven }}
         run: |
           echo -n "${GPG_SIGNING_KEY}" | base64 --decode | gpg --import
+
           mkdir maven
-          cp pom.xml maven/jmetal-plugin-${{ inputs.version }}.pom
-          cp target/jmetal-plugin-${{ inputs.version }}.jar maven/jmetal-plugin-${{ inputs.version }}.jar
-          cp target/jmetal-plugin-${{ inputs.version }}-jar-with-dependencies.jar maven/jmetal-plugin-${{ inputs.version }}-jar-with-dependencies.jar
-          cp target/jmetal-plugin-${{ inputs.version }}-sources.jar maven/jmetal-plugin-${{ inputs.version }}-sources.jar
-          cp target/jmetal-plugin-${{ inputs.version }}-javadoc.jar maven/jmetal-plugin-${{ inputs.version }}-javadoc.jar
+          cp pom.xml maven/${BUILD_ARTIFACT}.pom
+          cp target/${BUILD_ARTIFACT}.jar maven/
+          cp target/${BUILD_ARTIFACT}-jar-with-dependencies.jar maven/
+          cp target/${BUILD_ARTIFACT}-sources.jar maven/
+          cp target/${BUILD_ARTIFACT}-javadoc.jar maven/
           
           pushd maven
-          gpg -ab jmetal-plugin-${{ inputs.version }}.pom
-          gpg -ab jmetal-plugin-${{ inputs.version }}.jar
-          gpg -ab jmetal-plugin-${{ inputs.version }}-jar-with-dependencies.jar
-          gpg -ab jmetal-plugin-${{ inputs.version }}-sources.jar
-          gpg -ab jmetal-plugin-${{ inputs.version }}-javadoc.jar
+          gpg -ab ${BUILD_ARTIFACT}.pom
+          gpg -ab ${BUILD_ARTIFACT}.jar
+          gpg -ab ${BUILD_ARTIFACT}-jar-with-dependencies.jar
+          gpg -ab ${BUILD_ARTIFACT}-sources.jar
+          gpg -ab ${BUILD_ARTIFACT}-javadoc.jar
           
-          jar -cvf jmetal-plugin-${{ inputs.version }}-bundle.jar *
+          jar -cvf ${BUILD_ARTIFACT}-bundle.jar *
         env:
           GPG_SIGNING_KEY: ${{ secrets.GPG_SIGNING_KEY }}
       - name: Upload Maven bundle
@@ -68,13 +79,11 @@ jobs:
         if: ${{ inputs.publish_github }}
         run: |
           gh release create "v${{ inputs.version }}" --draft --title "Version ${{ inputs.version }}" \
-            target/jmetal-plugin-${{ inputs.version }}.jar target/jmetal-plugin-${{ inputs.version }}-jar-with-dependencies.jar 
+              target/${BUILD_ARTIFACT}.jar target/${BUILD_ARTIFACT}-jar-with-dependencies.jar
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Upload release artifacts
         uses: actions/upload-artifact@v3
         with:
           name: Release artifacts
-          path: |
-            target/jmetal-plugin-${{ inputs.version }}.jar
-            target/jmetal-plugin-${{ inputs.version }}-jar-with-dependencies.jar
+          path: target/*.jar

@@ -40,6 +40,7 @@
 			<groupId>org.moeaframework</groupId>
 			<artifactId>moeaframework</artifactId>
 			<version>3.1</version>
+			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.uma.jmetal</groupId>
@@ -56,6 +57,44 @@
 			<artifactId>junit</artifactId>
 			<version>4.13.2</version>
 			<scope>test</scope>
+		</dependency>
+		
+		<!-- defining some transitive dependencies as provided so they're not included in jar-all-dependencies -->
+		<dependency>
+			<groupId>nz.ac.waikato.cms.weka</groupId>
+			<artifactId>weka-stable</artifactId>
+			<version>3.8.5</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.knowm.xchart</groupId>
+			<artifactId>xchart</artifactId>
+			<version>3.2.2</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>2.11.0</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-text</artifactId>
+			<version>1.10.0</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+			<version>3.12.0</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-math3</artifactId>
+			<version>3.6.1</version>
+			<scope>provided</scope>
 		</dependency>
 	</dependencies>
 
@@ -96,18 +135,9 @@
 					<shadedClassifierName>jar-with-dependencies</shadedClassifierName>
 					<artifactSet>
 						<excludes>
-							<exclude>org.moeaframework:moeaframework</exclude>
+							<!-- exclude JUnit -->
 							<exclude>org.junit:junit</exclude>
-							<exclude>nz.ac.waikato.cms.weka:weka-stable</exclude>
-							<exclude>org.knowm.xchart:xchart</exclude>
 							<exclude>org.hamcrest:hamcrest</exclude>
-							<exclude>org.springframework:spring-test</exclude>
-							<exclude>org.mockito:mockito-core</exclude>
-							<exclude>commons-io:commons-io</exclude>
-							<exclude>org.apache.commons:commons-math3</exclude>
-							<exclude>org.apache.commons:commons-lang3</exclude>
-							<exclude>org.junit.jupiter:junit-jupiter-engine</exclude>
-							<exclude>org.junit.vintage:junit-vintage-engine</exclude>
 						</excludes>
 					</artifactSet>
 				</configuration>

@@ -91,8 +91,12 @@ public class JMetalAlgorithms extends RegisteredAlgorithmProvider {
 	private final boolean verbose;
 
 	public JMetalAlgorithms() {
+		this(false);
+	}
+	
+	public JMetalAlgorithms(boolean verbose) {
 		super();
-		this.verbose = true;
+		this.verbose = verbose;
 		
 		register(this::newAbYSS, "AbYSS", "AbYSS-JMetal");
 		register(this::newCDG, "CDG", "CDG-JMetal");
@@ -129,6 +133,18 @@ public class JMetalAlgorithms extends RegisteredAlgorithmProvider {
 		}
 	}
 	
+	/**
+	 * Reads the max iterations property.  The search order is:
+	 * <ol>
+	 *   <li>The property {@code maxIterations}
+	 *   <li>Derived from {@code maxEvaluations / populationSize}
+	 *   <li>Derived from {@code maxEvaluations / swarmSize} (for PSO algorithms)
+	 *   <li>Default to 250
+	 * </ol>
+	 * 
+	 * @param properties the user-defined properties
+	 * @return the max iterations
+	 */
 	private int getMaxIterations(TypedProperties properties) {
 		if (properties.contains("maxIterations")) {
 			return (int)properties.getDouble("maxIterations", 0);
@@ -140,6 +156,12 @@ public class JMetalAlgorithms extends RegisteredAlgorithmProvider {
 		}
 	}
 	
+	/**
+	 * Converts a MOEA Framework problem into an appropriately typed JMetal problem.
+	 * 
+	 * @param problem the MOEA Framework problem
+	 * @return the JMetal problem
+	 */
 	private ProblemAdapter<? extends org.uma.jmetal.solution.Solution<?>> createProblemAdapter(Problem problem) {
 		Set<Class<?>> types = new HashSet<Class<?>>();
 		Solution schema = problem.newSolution();
@@ -206,6 +228,10 @@ public class JMetalAlgorithms extends RegisteredAlgorithmProvider {
 	private void loadProperties(TypedProperties properties, AlgorithmBuilder<?> builder) {
 		Class<?> type = builder.getClass();
 		
+		if (verbose) {
+			System.out.println("Configuring " + type.getSimpleName());
+		}
+		
 		for (Method method : type.getMethods()) {
 			if (method.canAccess(builder) && 
 					method.getName().startsWith("set") &&
@@ -220,28 +246,28 @@ public class JMetalAlgorithms extends RegisteredAlgorithmProvider {
 						MethodUtils.invokeMethod(builder, methodName, value);
 						
 						if (verbose) {
-							System.out.println("Setting property '" + property + "' to " + value);
+							System.out.println("  > Setting property '" + property + "' to " + value);
 						}
 					} else if (TypeUtils.isAssignable(propertyType, double.class) && properties.contains(property)) {
 						double value = properties.getDouble(property, -1);
 						MethodUtils.invokeMethod(builder, methodName, value);
 						
 						if (verbose) {
-							System.out.println("Setting property '" + property + "' to " + value);
+							System.out.println("  > Setting property '" + property + "' to " + value);
 						}
 					} else if (propertyType.isEnum() && properties.contains(property)) {
 						String value = properties.getString(property, null);
 						MethodUtils.invokeStaticMethod(propertyType, "valueOf", value);
 						
 						if (verbose) {
-							System.out.println("Setting property '" + property + "' to '" + value + "'");
+							System.out.println("  > Setting property '" + property + "' to '" + value + "'");
 						}
 					} else if (property.equals("maxIterations")) {
 					    int value = getMaxIterations(properties);
 					    MethodUtils.invokeMethod(builder, methodName, value);
 					    
 					    if (verbose) {
-						    System.out.println("Setting property '" + property + "' to " + value);
+						    System.out.println("  > Setting property '" + property + "' to " + value);
 					    }
 					}
 				} catch (Exception e) {

@@ -167,6 +167,8 @@ public class JMetalAlgorithmsTest {
 	}
 	
 	private void runTest(String algorithmName, TypedProperties properties, Problem problem) {
+		properties.setInt("maxEvaluations", 500);
+		
 		Algorithm algorithm = new JMetalAlgorithms().getAlgorithm(algorithmName, properties, problem);
 		Assert.assertNotNull(algorithm);
 		
