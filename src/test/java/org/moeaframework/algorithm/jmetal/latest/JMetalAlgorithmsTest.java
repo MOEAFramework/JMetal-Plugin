@@ -19,6 +19,8 @@ package org.moeaframework.algorithm.jmetal.latest;
 
 import org.junit.Assert;
 import org.junit.Test;
+import org.moeaframework.core.Algorithm;
+import org.moeaframework.core.Problem;
 import org.moeaframework.problem.DTLZ.DTLZ2;
 import org.moeaframework.problem.ZDT.ZDT5;
 import org.moeaframework.util.TypedProperties;
@@ -45,119 +47,140 @@ public class JMetalAlgorithmsTest {
 
 	@Test
 	public void testAbYSS() {
-		new JMetalAlgorithms().getAlgorithm("AbYSS", new TypedProperties(), new DTLZ2(2));
+		runTest("AbYSS", new DTLZ2(2));
 	}
 	
 	@Test
 	public void testCDG() {
-		new JMetalAlgorithms().getAlgorithm("CDG", new TypedProperties(), new DTLZ2(2));
+		runTest("CDG", new DTLZ2(2));
 	}
 	
 	@Test
 	public void testDMOPSO() {
-		new JMetalAlgorithms().getAlgorithm("DMOPSO", new TypedProperties(), new DTLZ2(2));
+		runTest("DMOPSO", new DTLZ2(2));
 	}
 	
 	@Test
 	public void testESPEA() {
-		new JMetalAlgorithms().getAlgorithm("ESPEA", new TypedProperties(), new DTLZ2(2));
+		runTest("ESPEA", new DTLZ2(2));
 	}
 	
 	@Test
 	public void testFAME() {
-		new JMetalAlgorithms().getAlgorithm("FAME", new TypedProperties(), new DTLZ2(2));
+		runTest("FAME", new DTLZ2(2));
 	}
 	
 	@Test
 	public void testGDE3() {
-		new JMetalAlgorithms().getAlgorithm("GDE3", new TypedProperties(), new DTLZ2(2));
+		runTest("GDE3", new DTLZ2(2));
 	}
 	
 	@Test
 	public void testGWASFGA() {
-		new JMetalAlgorithms().getAlgorithm("GWASFGA", new TypedProperties(), new DTLZ2(2));
+		runTest("GWASFGA", new DTLZ2(2));
 	}
 	
 	@Test
 	public void testIBEA() {
-		new JMetalAlgorithms().getAlgorithm("IBEA", new TypedProperties(), new DTLZ2(2));
+		runTest("IBEA", new DTLZ2(2));
 	}
 	
 	@Test
 	public void testMOCell() {
-		new JMetalAlgorithms().getAlgorithm("MOCell", new TypedProperties(), new DTLZ2(2));
+		runTest("MOCell", new DTLZ2(2));
 	}
 	
 	@Test
 	public void testMOCHC() {
-		new JMetalAlgorithms().getAlgorithm("MOCHC", new TypedProperties(), new ZDT5());
+		runTest("MOCHC", new ZDT5());
 	}
 	
 	@Test
 	public void testMOEAD() {
-		new JMetalAlgorithms().getAlgorithm("MOEAD", new TypedProperties(), new DTLZ2(2));
+		runTest("MOEAD", new DTLZ2(2));
 	}
 	
 	@Test
 	public void testMOMBI() {
-		TypedProperties properties = TypedProperties.withProperty("pathWeights", "resources/weightVectorFiles/mombi2/weight_02D_152.sld");
-		new JMetalAlgorithms().getAlgorithm("MOMBI", properties, new DTLZ2(2));
+		TypedProperties properties = TypedProperties.withProperty("pathWeights",
+				"resources/weightVectorFiles/mombi2/weight_02D_152.sld");
+		
+		runTest("MOMBI", properties, new DTLZ2(2));
 	}
 	
 	@Test
 	public void testMOMBI2() {
-		TypedProperties properties = TypedProperties.withProperty("pathWeights", "resources/weightVectorFiles/mombi2/weight_02D_152.sld");
-		new JMetalAlgorithms().getAlgorithm("MOMBI2", properties, new DTLZ2(2));
+		TypedProperties properties = TypedProperties.withProperty("pathWeights",
+				"resources/weightVectorFiles/mombi2/weight_02D_152.sld");
+		
+		runTest("MOMBI2", properties, new DTLZ2(2));
 	}
 	
 	@Test
 	public void testMOSA() {
-		new JMetalAlgorithms().getAlgorithm("MOSA", new TypedProperties(), new DTLZ2(2));
+		runTest("MOSA", new DTLZ2(2));
 	}
 	
 	@Test
 	public void testNSGAII() {
-		new JMetalAlgorithms().getAlgorithm("NSGAII", new TypedProperties(), new DTLZ2(2));
+		runTest("NSGAII", new DTLZ2(2));
 	}
 	
 	@Test
 	public void testNSGAIII() {
-		new JMetalAlgorithms().getAlgorithm("NSGAIII", new TypedProperties(), new DTLZ2(2));
+		runTest("NSGAIII", new DTLZ2(2));
 	}
 	
 	@Test
 	public void testOMOPSO() {
-		new JMetalAlgorithms().getAlgorithm("OMOPSO", new TypedProperties(), new DTLZ2(2));
+		runTest("OMOPSO", new DTLZ2(2));
 	}
 	
 	@Test
 	public void testPAES() {
-		new JMetalAlgorithms().getAlgorithm("PAES", new TypedProperties(), new DTLZ2(2));
+		runTest("PAES", new DTLZ2(2));
 	}
 	
 	@Test
 	public void testPESA2() {
-		new JMetalAlgorithms().getAlgorithm("PESA2", new TypedProperties(), new DTLZ2(2));
+		runTest("PESA2", new DTLZ2(2));
 	}
 	
 	@Test
 	public void testRNSGAII() {
-		new JMetalAlgorithms().getAlgorithm("RNSGAII", new TypedProperties(), new DTLZ2(2));
+		runTest("RNSGAII", new DTLZ2(2));
 	}
 	
 	@Test
 	public void testSMPSO() {
-		new JMetalAlgorithms().getAlgorithm("SMPSO", new TypedProperties(), new DTLZ2(2));
+		runTest("SMPSO", new DTLZ2(2));
 	}
 	
 	@Test
 	public void testSPEA2() {
-		new JMetalAlgorithms().getAlgorithm("SPEA2", new TypedProperties(), new DTLZ2(2));
+		runTest("SPEA2", new DTLZ2(2));
 	}
 	
 	@Test
 	public void testWASFGA() {
-		new JMetalAlgorithms().getAlgorithm("WASFGA", new TypedProperties(), new DTLZ2(2));
+		runTest("WASFGA", new DTLZ2(2));
+	}
+	
+	private void runTest(String algorithmName, TypedProperties properties, Problem problem) {
+		Algorithm algorithm = new JMetalAlgorithms().getAlgorithm(algorithmName, properties, problem);
+		Assert.assertNotNull(algorithm);
+		
+		algorithm.step();
+		
+		Assert.assertTrue(algorithm.isTerminated());
+		Assert.assertTrue(algorithm.getResult().size() > 0);
+		
+		System.out.println(algorithmName + ": " + String.join(", ",
+				properties.getAccessedProperties().stream().sorted().toList()));	
 	}
 
+	private void runTest(String algorithmName, Problem problem) {
+		runTest(algorithmName, new TypedProperties(), problem);
+	}
+	
 }

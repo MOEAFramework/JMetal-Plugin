@@ -87,9 +87,12 @@ import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
 import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
 
 public class JMetalAlgorithms extends RegisteredAlgorithmProvider {
+	
+	private final boolean verbose;
 
 	public JMetalAlgorithms() {
 		super();
+		this.verbose = true;
 		
 		register(this::newAbYSS, "AbYSS", "AbYSS-JMetal");
 		register(this::newCDG, "CDG", "CDG-JMetal");
@@ -212,26 +215,34 @@ public class JMetalAlgorithms extends RegisteredAlgorithmProvider {
 				Class<?> propertyType = method.getParameterTypes()[0];
 				
 				try {
-					if (properties.contains(property)) {
-						if (TypeUtils.isAssignable(propertyType, int.class)) {
-							int value = properties.getInt(property, -1);
+					if (TypeUtils.isAssignable(propertyType, int.class) && properties.contains(property)) {
+						int value = properties.getInt(property, -1);
+						MethodUtils.invokeMethod(builder, methodName, value);
+						
+						if (verbose) {
 							System.out.println("Setting property '" + property + "' to " + value);
-							MethodUtils.invokeMethod(builder, methodName, value);
-						} else if (TypeUtils.isAssignable(propertyType, double.class)) {
-							double value = properties.getDouble(property, -1);
+						}
+					} else if (TypeUtils.isAssignable(propertyType, double.class) && properties.contains(property)) {
+						double value = properties.getDouble(property, -1);
+						MethodUtils.invokeMethod(builder, methodName, value);
+						
+						if (verbose) {
 							System.out.println("Setting property '" + property + "' to " + value);
-							MethodUtils.invokeMethod(builder, methodName, value);
-						} else if (propertyType.isEnum()) {
-							String value = properties.getString(property, null);
+						}
+					} else if (propertyType.isEnum() && properties.contains(property)) {
+						String value = properties.getString(property, null);
+						MethodUtils.invokeStaticMethod(propertyType, "valueOf", value);
+						
+						if (verbose) {
 							System.out.println("Setting property '" + property + "' to '" + value + "'");
-							MethodUtils.invokeStaticMethod(propertyType, "valueOf", value);
-						} else {
-							System.err.println("Found property " + property + " but can't call setter for type " + propertyType);
 						}
 					} else if (property.equals("maxIterations")) {
 					    int value = getMaxIterations(properties);
-					    System.out.println("Setting property '" + property + "' to " + value);
 					    MethodUtils.invokeMethod(builder, methodName, value);
+					    
+					    if (verbose) {
+						    System.out.println("Setting property '" + property + "' to " + value);
+					    }
 					}
 				} catch (Exception e) {
 					System.err.println("Failed to set property " + property);
@@ -471,7 +482,7 @@ public class JMetalAlgorithms extends RegisteredAlgorithmProvider {
 	
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	private Algorithm newNSGAII(TypedProperties properties, Problem problem) throws JMetalException {
-		ProblemAdapter<?> adapter = createProblemAdapter(problem);
+		ProblemAdapter adapter = createProblemAdapter(problem);
 		CrossoverOperator<?> crossover = JMetalFactory.getInstance().createCrossoverOperator(adapter, properties);
 		MutationOperator<?> mutation = JMetalFactory.getInstance().createMutationOperator(adapter, properties);
 		
@@ -484,14 +495,16 @@ public class JMetalAlgorithms extends RegisteredAlgorithmProvider {
 	
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	private Algorithm newNSGAIII(TypedProperties properties, Problem problem) throws JMetalException {
-		ProblemAdapter<?> adapter = createProblemAdapter(problem);
+		ProblemAdapter adapter = createProblemAdapter(problem);
 		
-		CrossoverOperator<?> crossover = JMetalFactory.getInstance().createCrossoverOperator(adapter, properties);
-		MutationOperator<?> mutation = JMetalFactory.getInstance().createMutationOperator(adapter, properties);
+		CrossoverOperator crossover = JMetalFactory.getInstance().createCrossoverOperator(adapter, properties);
+		MutationOperator mutation = JMetalFactory.getInstance().createMutationOperator(adapter, properties);
+		SelectionOperator selection = new BinaryTournamentSelection();
 
 		NSGAIIIBuilder builder = new NSGAIIIBuilder(adapter)
 				.setCrossoverOperator(crossover)
-				.setMutationOperator(mutation);
+				.setMutationOperator(mutation)
+				.setSelectionOperator(selection);
 		loadProperties(properties, builder);
 
 		return new JMetalAlgorithmAdapter(builder.build(), properties, adapter);
