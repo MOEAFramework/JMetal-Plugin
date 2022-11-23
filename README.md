@@ -37,8 +37,8 @@ NondominatedPopulation result = new Executor()
 ```
 
 JMetal algorithms are configured by supplying properties to the `Executor`.  We do not provide
-a list of explanation of these properties, but an easy way to figure out what properties are available
-for a given algorithm is to run:
+a listing or explanation of these properties, but an easy way to figure out what properties are available
+is to run:
 
 ```java
 
