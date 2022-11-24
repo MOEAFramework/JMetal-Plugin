@@ -1,6 +1,7 @@
 package org.moeaframework.problem.jmetal;
 
 import java.util.BitSet;
+import java.util.List;
 import java.util.function.Supplier;
 
 import org.moeaframework.core.Solution;
@@ -9,6 +10,7 @@ import org.moeaframework.core.variable.EncodingUtils;
 import org.moeaframework.problem.AbstractProblem;
 import org.uma.jmetal.problem.binaryproblem.BinaryProblem;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
+import org.uma.jmetal.problem.multiobjective.Binh2;
 import org.uma.jmetal.problem.multiobjective.Fonseca;
 import org.uma.jmetal.problem.multiobjective.Kursawe;
 import org.uma.jmetal.problem.multiobjective.Osyczka2;
@@ -62,6 +64,7 @@ import org.uma.jmetal.problem.multiobjective.zdt.ZDT6;
 import org.uma.jmetal.solution.binarysolution.BinarySolution;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.binarySet.BinarySet;
+import org.uma.jmetal.util.bounds.Bounds;
 
 public class JMetalProblems extends RegisteredProblemProvider {
 	
@@ -130,6 +133,7 @@ public class JMetalProblems extends RegisteredProblemProvider {
 		registerBinary("ZDT5", () -> new ZDT5(), "pf/ZDT5.pf");
 		registerDouble("ZDT6", () -> new ZDT6(), "pf/ZDT6.pf");
 		
+		registerDouble("Binh2", () -> new Binh2(), "pf/Binh2.pf");
 		registerDouble("Fonseca2", () -> new Fonseca(), "pf/Fonseca2.pf");
 		registerDouble("Kursawe", () -> new Kursawe(), "pf/Kursawe.pf");
 		registerDouble("Osyczka2", () -> new Osyczka2(), "pf/Osyczka2.pf");
@@ -149,13 +153,14 @@ public class JMetalProblems extends RegisteredProblemProvider {
 		register(name + "-JMetal", () -> new BinaryProblemWrapper(name, constructor.get()), referenceSet);
 	}
 	
-	private class DoubleProblemWrapper extends AbstractProblem {
+	private abstract class FrameworkProblemAdapter<T extends org.uma.jmetal.problem.Problem<S>,
+	S extends org.uma.jmetal.solution.Solution<?>> extends AbstractProblem {
 		
-		private final String name;
+		protected final String name;
 		
-		private final DoubleProblem innerProblem;
+		protected final T innerProblem;
 		
-		public DoubleProblemWrapper(String name, DoubleProblem innerProblem) {
+		public FrameworkProblemAdapter(String name, T innerProblem) {
 			super(innerProblem.getNumberOfVariables(), innerProblem.getNumberOfObjectives(),
 					innerProblem.getNumberOfConstraints());
 			this.name = name;
@@ -166,31 +171,33 @@ public class JMetalProblems extends RegisteredProblemProvider {
 		public String getName() {
 			return name;
 		}
+		
+		public abstract void convert(Solution solution, S otherSolution);
+		
+		public abstract void initVariables(Solution solution);
 
 		@Override
 		public void evaluate(Solution solution) {
-			DoubleSolution innerSolution = innerProblem.createSolution();
-			
-			for (int i = 0; i < getNumberOfVariables(); i++) {
-				innerSolution.variables().set(i, EncodingUtils.getReal(solution.getVariable(i)));
-			}
+			S innerSolution = innerProblem.createSolution();
+			convert(solution, innerSolution);
 			
 			innerProblem.evaluate(innerSolution);
 			
 			solution.setObjectives(innerSolution.objectives());
 			solution.setConstraints(innerSolution.constraints());
-		}
-
-		@SuppressWarnings("deprecation")
-		@Override
-		public Solution newSolution() {
-			Solution solution = new Solution(getNumberOfVariables(), getNumberOfObjectives(),
-					getNumberOfConstraints());
 			
-			for (int i = 0; i < getNumberOfVariables(); i++) {
-				solution.setVariable(i, EncodingUtils.newReal(innerProblem.getLowerBound(i), innerProblem.getUpperBound(i)));
+			// JMetal only recognizes constraints < 0 as infeasible whereas MOEA Framework
+			// treats any non-zero value as infeasible
+			for (int i = 0; i < solution.getNumberOfConstraints(); i++) {
+				if (solution.getConstraint(i) > 0.0) {
+					solution.setConstraint(i, 0.0);
+				}
 			}
-			
+		}
+		
+		public Solution newSolution() {
+			Solution solution = new Solution(getNumberOfVariables(), getNumberOfObjectives(), getNumberOfConstraints());
+			initVariables(solution);
 			return solution;
 		}
 
@@ -201,28 +208,38 @@ public class JMetalProblems extends RegisteredProblemProvider {
 		
 	}
 	
-	private class BinaryProblemWrapper extends AbstractProblem {
-		
-		private final String name;
-		
-		private final BinaryProblem innerProblem;
-		
-		public BinaryProblemWrapper(String name, BinaryProblem innerProblem) {
-			super(innerProblem.getNumberOfVariables(), innerProblem.getNumberOfObjectives(),
-					innerProblem.getNumberOfConstraints());
-			this.name = name;
-			this.innerProblem = innerProblem;
+	private class DoubleProblemWrapper extends FrameworkProblemAdapter<DoubleProblem, DoubleSolution> {
+
+		public DoubleProblemWrapper(String name, DoubleProblem innerProblem) {
+			super(name, innerProblem);
 		}
 
 		@Override
-		public String getName() {
-			return name;
+		public void convert(Solution solution, DoubleSolution otherSolution) {
+			for (int i = 0; i < solution.getNumberOfVariables(); i++) {
+				otherSolution.variables().set(i, EncodingUtils.getReal(solution.getVariable(i)));
+			}
 		}
-
+		
 		@Override
-		public void evaluate(Solution solution) {
-			BinarySolution innerSolution = innerProblem.createSolution();
+		public void initVariables(Solution solution) {
+			List<Bounds<Double>> bounds = innerProblem.getBoundsForVariables();
 			
+			for (int i = 0; i < getNumberOfVariables(); i++) {
+				solution.setVariable(i, EncodingUtils.newReal(bounds.get(i).getLowerBound(), bounds.get(i).getUpperBound()));
+			}
+		}
+		
+	}
+	
+	private class BinaryProblemWrapper extends FrameworkProblemAdapter<BinaryProblem, BinarySolution> {
+
+		public BinaryProblemWrapper(String name, BinaryProblem innerProblem) {
+			super(name, innerProblem);
+		}
+		
+		@Override
+		public void convert(Solution solution, BinarySolution otherSolution) {
 			for (int i = 0; i < getNumberOfVariables(); i++) {
 				BitSet bits = EncodingUtils.getBitSet(solution.getVariable(i));
 				BinarySet binarySet = new BinarySet(bits.length());
@@ -231,30 +248,15 @@ public class JMetalProblems extends RegisteredProblemProvider {
 					binarySet.set(j, bits.get(j));
 				}
 				
-				innerSolution.variables().set(i, binarySet);
+				otherSolution.variables().set(i, binarySet);
 			}
-			
-			innerProblem.evaluate(innerSolution);
-			
-			solution.setObjectives(innerSolution.objectives());
-			solution.setConstraints(innerSolution.constraints());
 		}
-
+		
 		@Override
-		public Solution newSolution() {
-			Solution solution = new Solution(getNumberOfVariables(), getNumberOfObjectives(),
-					getNumberOfConstraints());
-			
+		public void initVariables(Solution solution) {
 			for (int i = 0; i < getNumberOfVariables(); i++) {
 				solution.setVariable(i, EncodingUtils.newBinary(innerProblem.getBitsFromVariable(i)));
 			}
-			
-			return solution;
-		}
-
-		@Override
-		public void close() {
-			// do nothing
 		}
 		
 	}
