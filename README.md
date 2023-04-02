@@ -14,7 +14,7 @@ Add the following dependency to your `pom.xml`:
 <dependency>
     <groupId>org.moeaframework</groupId>
     <artifactId>jmetal-plugin</artifactId>
-    <version>5.11.2</version>
+    <version>6.0.0</version>
 </dependency>
 ```
 
@@ -26,6 +26,7 @@ number of this project will match the supported JMetal version.  Below is a comp
 JMetal Version | Supported MOEA Framework Versions | Supported Java Versions
 -------------- | --------------------------------- | -----------------------
 **5.11**       | `>= 3.2`                          | `>= 14`
+**6.0**        | `>= 3.5`                          | `>= 14`
 
 ## Usage
 

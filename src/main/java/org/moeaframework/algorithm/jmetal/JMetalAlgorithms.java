@@ -43,6 +43,8 @@ import org.moeaframework.problem.ProblemException;
 import org.moeaframework.util.TypedProperties;
 import org.uma.jmetal.algorithm.AlgorithmBuilder;
 import org.uma.jmetal.algorithm.multiobjective.abyss.ABYSSBuilder;
+import org.uma.jmetal.algorithm.multiobjective.agemoea.AGEMOEABuilder;
+import org.uma.jmetal.algorithm.multiobjective.agemoeaii.AGEMOEAIIBuilder;
 import org.uma.jmetal.algorithm.multiobjective.cdg.CDGBuilder;
 import org.uma.jmetal.algorithm.multiobjective.dmopso.DMOPSOBuilder;
 import org.uma.jmetal.algorithm.multiobjective.espea.ESPEABuilder;
@@ -104,6 +106,8 @@ public class JMetalAlgorithms extends RegisteredAlgorithmProvider {
 		this.verbose = verbose;
 		
 		register(this::newAbYSS, "AbYSS", "AbYSS-JMetal");
+		register(this::newAGEMOEA, "AGEMOEA", "AGE-MOEA", "AGEMOEA-JMetal", "AGE-MOEA-JMetal");
+		register(this::newAGEMOEAII, "AGEMOEAII", "AGE-MOEA-II", "AGEMOEAII-JMetal", "AGE-MOEA-II-JMetal");
 		register(this::newCDG, "CDG", "CDG-JMetal");
 		register(this::newDMOPSO, "DMOPSO", "DMOPSO-JMetal");
 		register(this::newESPEA, "ESPEA", "ESPEA-JMetal");
@@ -283,6 +287,34 @@ public class JMetalAlgorithms extends RegisteredAlgorithmProvider {
 				}
 			}
 		}
+	}
+	
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	private Algorithm newAGEMOEA(TypedProperties properties, Problem problem) throws JMetalException {
+		ProblemAdapter<?> adapter = createProblemAdapter(problem);
+		CrossoverOperator<?> crossover = JMetalFactory.getInstance().createCrossoverOperator(adapter, properties);
+		MutationOperator<?> mutation = JMetalFactory.getInstance().createMutationOperator(adapter, properties);
+
+	    AGEMOEABuilder builder = new AGEMOEABuilder(adapter)
+	    		.setCrossoverOperator(crossover)
+	    		.setMutationOperator(mutation);
+		loadProperties(properties, builder);
+        
+		return new JMetalAlgorithmAdapter(builder.build(), properties, adapter);
+	}
+	
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	private Algorithm newAGEMOEAII(TypedProperties properties, Problem problem) throws JMetalException {
+		ProblemAdapter<?> adapter = createProblemAdapter(problem);
+		CrossoverOperator<?> crossover = JMetalFactory.getInstance().createCrossoverOperator(adapter, properties);
+		MutationOperator<?> mutation = JMetalFactory.getInstance().createMutationOperator(adapter, properties);
+
+	    AGEMOEAIIBuilder builder = new AGEMOEAIIBuilder(adapter)
+	    		.setCrossoverOperator(crossover)
+	    		.setMutationOperator(mutation);
+		loadProperties(properties, builder);
+        
+		return new JMetalAlgorithmAdapter(builder.build(), properties, adapter);
 	}
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })

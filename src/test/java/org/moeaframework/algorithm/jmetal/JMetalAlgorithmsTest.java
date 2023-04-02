@@ -51,6 +51,16 @@ public class JMetalAlgorithmsTest {
 	}
 	
 	@Test
+	public void testAGEMOEA() {
+		runTest("AGEMOEA-JMetal", new DTLZ2(2));
+	}
+	
+	@Test
+	public void testAGEMOEAII() {
+		runTest("AGEMOEAII-JMetal", new DTLZ2(2));
+	}
+	
+	@Test
 	public void testCDG() {
 		runTest("CDG-JMetal", new DTLZ2(2));
 	}
