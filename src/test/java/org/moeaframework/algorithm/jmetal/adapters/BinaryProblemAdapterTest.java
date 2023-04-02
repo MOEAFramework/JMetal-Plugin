@@ -1,4 +1,4 @@
-/* Copyright 2009-2022 David Hadka
+/* Copyright 2009-2023 David Hadka
  *
  * This file is part of the MOEA Framework.
  *
@@ -37,9 +37,9 @@ public class BinaryProblemAdapterTest {
 		MockBinaryProblem problem = new MockBinaryProblem();
 		BinaryProblemAdapter adapter = new BinaryProblemAdapter(problem);
 		
-		Assert.assertEquals(1, adapter.getNumberOfVariables());
-		Assert.assertEquals(10, adapter.getBitsFromVariable(0));
-		Assert.assertEquals(10, adapter.getTotalNumberOfBits());
+		Assert.assertEquals(1, adapter.numberOfVariables());
+		Assert.assertEquals(10, adapter.bitsFromVariable(0));
+		Assert.assertEquals(10, adapter.totalNumberOfBits());
 		Assert.assertEquals(10, adapter.getNumberOfMutationIndices());
 	}
 	

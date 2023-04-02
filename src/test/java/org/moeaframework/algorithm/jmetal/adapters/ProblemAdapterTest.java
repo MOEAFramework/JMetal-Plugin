@@ -1,4 +1,4 @@
-/* Copyright 2009-2022 David Hadka
+/* Copyright 2009-2023 David Hadka
  *
  * This file is part of the MOEA Framework.
  *
@@ -55,10 +55,10 @@ public class ProblemAdapterTest {
 		MockConstraintProblem problem = new MockConstraintProblem();
 		TestProblemAdapter<DoubleSolution> adapter = new TestProblemAdapter<DoubleSolution>(problem);
 		
-		Assert.assertEquals(problem.getName(), adapter.getName());
-		Assert.assertEquals(problem.getNumberOfVariables(), adapter.getNumberOfVariables());
-		Assert.assertEquals(problem.getNumberOfObjectives(), adapter.getNumberOfObjectives());
-		Assert.assertEquals(problem.getNumberOfConstraints(), adapter.getNumberOfConstraints());
+		Assert.assertEquals(problem.getName(), adapter.name());
+		Assert.assertEquals(problem.getNumberOfVariables(), adapter.numberOfVariables());
+		Assert.assertEquals(problem.getNumberOfObjectives(), adapter.numberOfObjectives());
+		Assert.assertEquals(problem.getNumberOfConstraints(), adapter.numberOfConstraints());
 		Assert.assertEquals(problem.getNumberOfVariables(), adapter.getNumberOfMutationIndices());
 	}
 	
