@@ -23,10 +23,10 @@ Add the following dependency to your `pom.xml`:
 We aim to support the latest version of JMetal, however, there may be some delay after a new release.  The `{major}.{minor}` version
 number of this project will match the supported JMetal version.  Below is a complete list of supported versions:
 
-JMetal Version | Supported MOEA Framework Versions | Supported Java Versions
--------------- | --------------------------------- | -----------------------
-**5.11**       | `>= 3.2`                          | `>= 14`
-**6.0**        | `>= 3.5`                          | `>= 14`
+JMetal Version | JMetal-Plugin Latest | Supported MOEA Framework Versions | Supported Java Versions
+-------------- | -------------------- | --------------------------------- | -----------------------
+**6.0**        | **`6.0.0`**          | **`>= 3.5`**                      | **`>= 14`**
+5.11           | `5.11.2`             | `>= 3.2`                          | `>= 14`
 
 ## Usage
 
