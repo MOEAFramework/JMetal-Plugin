@@ -1,4 +1,4 @@
-/* Copyright 2009-2022 David Hadka
+/* Copyright 2009-2023 David Hadka
  *
  * This file is part of the MOEA Framework.
  *
@@ -48,6 +48,16 @@ public class JMetalAlgorithmsTest {
 	@Test
 	public void testAbYSS() {
 		runTest("AbYSS-JMetal", new DTLZ2(2));
+	}
+	
+	@Test
+	public void testAGEMOEA() {
+		runTest("AGEMOEA-JMetal", new DTLZ2(2));
+	}
+	
+	@Test
+	public void testAGEMOEAII() {
+		runTest("AGEMOEAII-JMetal", new DTLZ2(2));
 	}
 	
 	@Test

@@ -1,4 +1,4 @@
-/* Copyright 2009-2022 David Hadka
+/* Copyright 2009-2023 David Hadka
  *
  * This file is part of the MOEA Framework.
  *
@@ -20,7 +20,6 @@ package org.moeaframework.algorithm.jmetal.adapters;
 import java.util.List;
 import java.util.stream.IntStream;
 
-import org.apache.commons.lang3.tuple.Pair;
 import org.moeaframework.core.Problem;
 import org.moeaframework.core.Solution;
 import org.moeaframework.core.variable.EncodingUtils;
@@ -28,6 +27,7 @@ import org.moeaframework.core.variable.RealVariable;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.solution.doublesolution.impl.DefaultDoubleSolution;
+import org.uma.jmetal.util.bounds.Bounds;
 
 /**
  * Converts a problem with real-valued decision variables into JMetal's DoubleProblem.
@@ -45,26 +45,24 @@ public class DoubleProblemAdapter extends ProblemAdapter<DoubleSolution> impleme
 		super(problem);
 	}
 	
-	@Override
-	public Double getLowerBound(int index) {
+	public double getLowerBound(int index) {
 		return ((RealVariable)schema.getVariable(index)).getLowerBound();
 	}
 
-	@Override
-	public Double getUpperBound(int index) {
+	public double getUpperBound(int index) {
 		return ((RealVariable)schema.getVariable(index)).getUpperBound();
 	}
 
 	@Override
 	public DoubleSolution createSolution() {
-		return new DefaultDoubleSolution(getNumberOfObjectives(), getNumberOfConstraints(), getBoundsForVariables());
+		return new DefaultDoubleSolution(variableBounds(), numberOfObjectives(), numberOfConstraints());
 	}
 	
 	@Override
 	public Solution convert(DoubleSolution solution) {
 		Solution result = problem.newSolution();
 		
-		for (int i = 0; i < getNumberOfVariables(); i++) {
+		for (int i = 0; i < numberOfVariables(); i++) {
 			EncodingUtils.setReal(result.getVariable(i), solution.variables().get(i));
 		}
 		
@@ -72,9 +70,9 @@ public class DoubleProblemAdapter extends ProblemAdapter<DoubleSolution> impleme
 	}
 
 	@Override
-	public List<Pair<Double, Double>> getBounds() {
+	public List<Bounds<Double>> variableBounds() {
 		return IntStream.range(0, problem.getNumberOfVariables()).mapToObj(
-				i -> Pair.of(getLowerBound(i), getUpperBound(i))).toList();
+				i -> Bounds.create(getLowerBound(i), getUpperBound(i))).toList();
 	}
 
 }

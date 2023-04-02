@@ -1,4 +1,4 @@
-/* Copyright 2009-2022 David Hadka
+/* Copyright 2009-2023 David Hadka
  *
  * This file is part of the MOEA Framework.
  *
@@ -36,8 +36,8 @@ public class PermutationProblemAdapterTest {
 		MockPermutationProblem problem = new MockPermutationProblem();
 		PermutationProblemAdapter adapter = new PermutationProblemAdapter(problem);
 		
-		Assert.assertEquals(10, adapter.getNumberOfVariables());
-		Assert.assertEquals(10, adapter.getLength());
+		Assert.assertEquals(10, adapter.numberOfVariables());
+		Assert.assertEquals(10, adapter.length());
 		Assert.assertEquals(1, adapter.getNumberOfMutationIndices());
 	}
 	
