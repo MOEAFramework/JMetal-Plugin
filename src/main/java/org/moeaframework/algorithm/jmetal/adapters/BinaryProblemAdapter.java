@@ -59,30 +59,30 @@ public class BinaryProblemAdapter extends ProblemAdapter<BinarySolution> impleme
 	}
 	
 	@Override
-	public int getBitsFromVariable(int index) {
+	public int bitsFromVariable(int index) {
 		return ((BinaryVariable)schema.getVariable(index)).getNumberOfBits();
 	}
 	
 	@Override
-	public int getTotalNumberOfBits() {
+	public int totalNumberOfBits() {
 		return totalNumberOfBits;
 	}
 	
 	@Override
-	public List<Integer> getListOfBitsPerVariable() {
-		return IntStream.range(0, getNumberOfVariables()).mapToObj(i -> getBitsFromVariable(i)).toList();
+	public List<Integer> listOfBitsPerVariable() {
+		return IntStream.range(0, numberOfVariables()).mapToObj(i -> bitsFromVariable(i)).toList();
 	}
 	
 	@Override
 	public BinarySolution createSolution() {
-		return new DefaultBinarySolution(getListOfBitsPerVariable(), getNumberOfObjectives(), getNumberOfConstraints());
+		return new DefaultBinarySolution(listOfBitsPerVariable(), numberOfObjectives(), numberOfConstraints());
 	}
 	
 	@Override
 	public Solution convert(BinarySolution solution) {
 		Solution result = problem.newSolution();
 		
-		for (int i = 0; i < getNumberOfVariables(); i++) {
+		for (int i = 0; i < numberOfVariables(); i++) {
 			EncodingUtils.setBitSet(result.getVariable(i), solution.variables().get(i));
 		}
 		
@@ -91,7 +91,7 @@ public class BinaryProblemAdapter extends ProblemAdapter<BinarySolution> impleme
 	
 	@Override
 	public int getNumberOfMutationIndices() {
-		return getTotalNumberOfBits();
+		return totalNumberOfBits();
 	}
 
 }

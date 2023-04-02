@@ -161,8 +161,7 @@ public class JMetalProblems extends RegisteredProblemProvider {
 		protected final T innerProblem;
 		
 		public FrameworkProblemAdapter(String name, T innerProblem) {
-			super(innerProblem.getNumberOfVariables(), innerProblem.getNumberOfObjectives(),
-					innerProblem.getNumberOfConstraints());
+			super(innerProblem.numberOfVariables(), innerProblem.numberOfObjectives(), innerProblem.numberOfConstraints());
 			this.name = name;
 			this.innerProblem = innerProblem;
 		}
@@ -223,7 +222,7 @@ public class JMetalProblems extends RegisteredProblemProvider {
 		
 		@Override
 		public void initVariables(Solution solution) {
-			List<Bounds<Double>> bounds = innerProblem.getBoundsForVariables();
+			List<Bounds<Double>> bounds = innerProblem.variableBounds();
 			
 			for (int i = 0; i < getNumberOfVariables(); i++) {
 				solution.setVariable(i, EncodingUtils.newReal(bounds.get(i).getLowerBound(), bounds.get(i).getUpperBound()));
@@ -255,7 +254,7 @@ public class JMetalProblems extends RegisteredProblemProvider {
 		@Override
 		public void initVariables(Solution solution) {
 			for (int i = 0; i < getNumberOfVariables(); i++) {
-				solution.setVariable(i, EncodingUtils.newBinary(innerProblem.getBitsFromVariable(i)));
+				solution.setVariable(i, EncodingUtils.newBinary(innerProblem.bitsFromVariable(i)));
 			}
 		}
 		

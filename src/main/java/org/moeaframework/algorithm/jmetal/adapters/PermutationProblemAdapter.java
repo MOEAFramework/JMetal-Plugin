@@ -56,7 +56,7 @@ implements PermutationProblem<PermutationSolution<Integer>> {
 	
 	@Override
 	public PermutationSolution<Integer> createSolution() {
-		return new IntegerPermutationSolution(getLength(), getNumberOfObjectives());
+		return new IntegerPermutationSolution(length(), numberOfObjectives());
 	}
 	
 	@Override
@@ -74,12 +74,12 @@ implements PermutationProblem<PermutationSolution<Integer>> {
 	}
 	
 	@Override
-	public int getNumberOfVariables() {
-		return getLength();
+	public int numberOfVariables() {
+		return length();
 	}
 	
 	@Override
-	public int getLength() {
+	public int length() {
 		return ((Permutation)schema.getVariable(0)).size();
 	}
 	

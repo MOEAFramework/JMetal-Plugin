@@ -496,14 +496,18 @@ public class JMetalAlgorithms extends RegisteredAlgorithmProvider {
 	
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	private Algorithm newMOSA(TypedProperties properties, Problem problem) throws JMetalException {
-		ProblemAdapter<?> adapter = createProblemAdapter(problem);
+		ProblemAdapter adapter = createProblemAdapter(problem);
 		MutationOperator<?> mutation = JMetalFactory.getInstance().createMutationOperator(adapter, properties);
 	    
 	    BoundedArchive<DoubleSolution> archive = new GenericBoundedArchive<>(
 	    		properties.getInt("archiveSize", 100),
 	    		new CrowdingDistanceDensityEstimator<>());
+	    
+	    org.uma.jmetal.solution.Solution initialSolution = (org.uma.jmetal.solution.Solution)adapter.createSolution();
+	    adapter.evaluate(initialSolution);
 
-	    MOSA algorithm = new MOSA(adapter,
+	    MOSA algorithm = new MOSA(initialSolution,
+	    		adapter,
 	    		(int)properties.getDouble("maxEvaluations", 25000),
 	    		archive,
 	    		mutation,

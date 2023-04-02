@@ -39,23 +39,22 @@
 		<dependency>
 			<groupId>org.moeaframework</groupId>
 			<artifactId>moeaframework</artifactId>
-			<version>3.1</version>
-			<scope>provided</scope>
+			<version>3.5</version>
 		</dependency>
 		<dependency>
 			<groupId>org.uma.jmetal</groupId>
 			<artifactId>jmetal-algorithm</artifactId>
-			<version>5.11</version>
+			<version>6.0</version>
 		</dependency>
 		<dependency>
 			<groupId>org.uma.jmetal</groupId>
 			<artifactId>jmetal-core</artifactId>
-			<version>5.11</version>
+			<version>6.0</version>
 		</dependency>
 		<dependency>
 			<groupId>org.uma.jmetal</groupId>
 			<artifactId>jmetal-problem</artifactId>
-			<version>5.11</version>
+			<version>6.0</version>
 		</dependency>
 		<dependency>
 			<groupId>junit</groupId>

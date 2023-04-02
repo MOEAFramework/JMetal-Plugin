@@ -69,22 +69,22 @@ implements org.uma.jmetal.problem.Problem<T> {
 	}
 	
 	@Override
-	public String getName() {
+	public String name() {
 		return problem.getName();
 	}
 	
 	@Override
-	public int getNumberOfConstraints() {
+	public int numberOfConstraints() {
 		return problem.getNumberOfConstraints();
 	}
 
 	@Override
-	public int getNumberOfObjectives() {
+	public int numberOfObjectives() {
 		return problem.getNumberOfObjectives();
 	}
 	
 	@Override
-	public int getNumberOfVariables() {
+	public int numberOfVariables() {
 		return problem.getNumberOfVariables();
 	}
 	
@@ -120,7 +120,7 @@ implements org.uma.jmetal.problem.Problem<T> {
 	 * @return the number of decision variables eligible for mutation
 	 */
 	public int getNumberOfMutationIndices() {
-		return getNumberOfVariables();
+		return numberOfVariables();
 	}
 	
 }
