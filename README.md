@@ -23,7 +23,9 @@ Add the following dependency to your `pom.xml`:
 We aim to support the latest version of JMetal, however, there may be some delay after a new release.  The `{major}.{minor}` version
 number of this project will match the supported JMetal version.  Below is a complete list of supported versions:
 
-* 5.11 - Requires Java 14 or later
+JMetal Version | Supported MOEA Framework Versions | Supported Java Versions
+-------------- | --------------------------------- | -----------------------
+**5.11**       | `>= 3.2`                          | `>= 14`
 
 ## Usage
 
