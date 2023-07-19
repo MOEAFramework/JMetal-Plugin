@@ -10,7 +10,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        java: [ '16', '17', '18', '19' ] # JMetal 5.11 requires 14 or later
+        java: [ '16', '17', '18', '19', '20' ] # JMetal 5.11 requires 14 or later
     steps:
       - uses: actions/checkout@v3
       - name: Set up JDK ${{ matrix.java }}
