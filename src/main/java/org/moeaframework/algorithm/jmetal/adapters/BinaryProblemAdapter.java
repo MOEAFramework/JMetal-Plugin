@@ -58,7 +58,6 @@ public class BinaryProblemAdapter extends ProblemAdapter<BinarySolution> impleme
 		totalNumberOfBits = numberOfBits;
 	}
 	
-	@Override
 	public int bitsFromVariable(int index) {
 		return ((BinaryVariable)schema.getVariable(index)).getNumberOfBits();
 	}
@@ -69,13 +68,13 @@ public class BinaryProblemAdapter extends ProblemAdapter<BinarySolution> impleme
 	}
 	
 	@Override
-	public List<Integer> listOfBitsPerVariable() {
+	public List<Integer> numberOfBitsPerVariable() {
 		return IntStream.range(0, numberOfVariables()).mapToObj(i -> bitsFromVariable(i)).toList();
 	}
 	
 	@Override
 	public BinarySolution createSolution() {
-		return new DefaultBinarySolution(listOfBitsPerVariable(), numberOfObjectives(), numberOfConstraints());
+		return new DefaultBinarySolution(numberOfBitsPerVariable(), numberOfObjectives(), numberOfConstraints());
 	}
 	
 	@Override

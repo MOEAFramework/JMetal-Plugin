@@ -20,16 +20,16 @@ import org.uma.jmetal.problem.multiobjective.Tanaka;
 import org.uma.jmetal.problem.multiobjective.Viennet2;
 import org.uma.jmetal.problem.multiobjective.Viennet3;
 import org.uma.jmetal.problem.multiobjective.Viennet4;
-import org.uma.jmetal.problem.multiobjective.UF.UF1;
-import org.uma.jmetal.problem.multiobjective.UF.UF10;
-import org.uma.jmetal.problem.multiobjective.UF.UF2;
-import org.uma.jmetal.problem.multiobjective.UF.UF3;
-import org.uma.jmetal.problem.multiobjective.UF.UF4;
-import org.uma.jmetal.problem.multiobjective.UF.UF5;
-import org.uma.jmetal.problem.multiobjective.UF.UF6;
-import org.uma.jmetal.problem.multiobjective.UF.UF7;
-import org.uma.jmetal.problem.multiobjective.UF.UF8;
-import org.uma.jmetal.problem.multiobjective.UF.UF9;
+import org.uma.jmetal.problem.multiobjective.uf.UF1;
+import org.uma.jmetal.problem.multiobjective.uf.UF10;
+import org.uma.jmetal.problem.multiobjective.uf.UF2;
+import org.uma.jmetal.problem.multiobjective.uf.UF3;
+import org.uma.jmetal.problem.multiobjective.uf.UF4;
+import org.uma.jmetal.problem.multiobjective.uf.UF5;
+import org.uma.jmetal.problem.multiobjective.uf.UF6;
+import org.uma.jmetal.problem.multiobjective.uf.UF7;
+import org.uma.jmetal.problem.multiobjective.uf.UF8;
+import org.uma.jmetal.problem.multiobjective.uf.UF9;
 import org.uma.jmetal.problem.multiobjective.dtlz.DTLZ1;
 import org.uma.jmetal.problem.multiobjective.dtlz.DTLZ2;
 import org.uma.jmetal.problem.multiobjective.dtlz.DTLZ3;
@@ -254,7 +254,7 @@ public class JMetalProblems extends RegisteredProblemProvider {
 		@Override
 		public void initVariables(Solution solution) {
 			for (int i = 0; i < getNumberOfVariables(); i++) {
-				solution.setVariable(i, EncodingUtils.newBinary(innerProblem.bitsFromVariable(i)));
+				solution.setVariable(i, EncodingUtils.newBinary(innerProblem.numberOfBitsPerVariable().get(i)));
 			}
 		}
 		
