@@ -114,7 +114,7 @@ public class JMetalAlgorithmAdapter<T extends org.uma.jmetal.solution.Solution<?
 		if (solutionSet == null) {
 			try {
 				algorithm.run();
-				solutionSet = algorithm.getResult();
+				solutionSet = algorithm.result();
 			} catch (Exception e) {
 				throw new AlgorithmException(this, e);
 			}

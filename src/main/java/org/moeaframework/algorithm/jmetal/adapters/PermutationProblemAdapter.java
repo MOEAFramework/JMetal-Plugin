@@ -47,16 +47,11 @@ implements PermutationProblem<PermutationSolution<Integer>> {
 		if (schema.getNumberOfVariables() != 1) {
 			throw new FrameworkException("PermutationProblemAdapter only works with a single Permutation variable");
 		}
-		
-		if (problem.getNumberOfConstraints() > 0) {
-			// JMetal's IntegerPermutationSolution doesn't have a constraint input!
-			throw new FrameworkException("PermutationProblemAdapter does not support constraints");
-		}
 	}
 	
 	@Override
 	public PermutationSolution<Integer> createSolution() {
-		return new IntegerPermutationSolution(length(), numberOfObjectives());
+		return new IntegerPermutationSolution(length(), numberOfObjectives(), numberOfConstraints());
 	}
 	
 	@Override
