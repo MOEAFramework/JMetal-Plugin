@@ -26,7 +26,7 @@
 	</developers>
 
 	<scm>
-		<url>https://github.com/MOEAFramework/JMetal-Latest</url>
+		<url>https://github.com/MOEAFramework/JMetal-Plugin</url>
 	</scm>
 
 	<properties>
