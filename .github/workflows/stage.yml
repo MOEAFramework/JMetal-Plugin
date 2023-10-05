@@ -80,7 +80,7 @@ jobs:
         run: |
           gh release create "v${{ inputs.version }}" --draft --title "Version ${{ inputs.version }}" \
               target/${BUILD_ARTIFACT}.jar \
-              $([ -f "${BUILD_ARTIFACT}-jar-with-dependencies.jar" ] && echo "target/${BUILD_ARTIFACT}-jar-with-dependencies.jar" || echo "")
+              $([ -f "target/${BUILD_ARTIFACT}-jar-with-dependencies.jar" ] && echo "target/${BUILD_ARTIFACT}-jar-with-dependencies.jar" || echo "")
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Upload release artifacts
