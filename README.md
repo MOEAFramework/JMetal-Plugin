@@ -7,7 +7,7 @@ algorithms, please cite:
 
 ## Installation
 
-Add the following dependency to your `pom.xml`:
+When using Maven, add the following dependency to your `pom.xml`:
 
 ```xml
 
@@ -17,6 +17,10 @@ Add the following dependency to your `pom.xml`:
     <version>6.2.0</version>
 </dependency>
 ```
+
+Otherwise, download and add the `.jar` file from the [Releases](https://github.com/MOEAFramework/JMetal-Plugin/releases) page
+to the classpath, which is typically the `MOEAFramework/lib/` folder.  We recommend using the `-jar-with-dependencies` file as
+it includes the appropriate JMetal version and its dependencies.
 
 ## Supported Versions
 
