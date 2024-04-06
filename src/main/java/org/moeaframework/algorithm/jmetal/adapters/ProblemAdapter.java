@@ -1,4 +1,4 @@
-/* Copyright 2009-2023 David Hadka
+/* Copyright 2009-2024 David Hadka
  *
  * This file is part of the MOEA Framework.
  *
@@ -114,8 +114,7 @@ implements org.uma.jmetal.problem.Problem<T> {
 	}
 	
 	/**
-	 * Returns the number of decision variables eligible for mutation.  This is
-	 * used to compute mutation rates.
+	 * Returns the number of decision variables eligible for mutation.  This is used to compute mutation rates.
 	 * 
 	 * @return the number of decision variables eligible for mutation
 	 */

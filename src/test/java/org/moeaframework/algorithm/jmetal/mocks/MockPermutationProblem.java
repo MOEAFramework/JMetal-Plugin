@@ -1,4 +1,4 @@
-/* Copyright 2009-2023 David Hadka
+/* Copyright 2009-2024 David Hadka
  *
  * This file is part of the MOEA Framework.
  *
@@ -22,8 +22,7 @@ import org.moeaframework.core.variable.Permutation;
 import org.moeaframework.problem.AbstractProblem;
 
 /**
- * A mock problem with a permutation variable.  The objective of this problem
- * is to find the ordered permutation.
+ * A mock problem with a permutation variable.  The objective of this problem is to find the ordered permutation.
  */
 public class MockPermutationProblem extends AbstractProblem {
 	

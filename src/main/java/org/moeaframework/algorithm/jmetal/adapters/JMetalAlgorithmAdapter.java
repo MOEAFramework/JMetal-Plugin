@@ -1,4 +1,4 @@
-/* Copyright 2009-2023 David Hadka
+/* Copyright 2009-2024 David Hadka
  *
  * This file is part of the MOEA Framework.
  *
@@ -17,8 +17,6 @@
  */
 package org.moeaframework.algorithm.jmetal.adapters;
 
-import java.io.NotSerializableException;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,10 +28,9 @@ import org.moeaframework.core.Solution;
 import org.moeaframework.util.TypedProperties;
 
 /**
- * Adapter for JMetal algorithms. This allows JMetal algorithms to be used within the
- * MOEA Framework as an {@link Algorithm}.  There is one substantial difference: since
- * JMetal does not distinguish iterations of the algorithm, one "step" is the full
- * execution of the algorithm.
+ * Adapter for JMetal algorithms. This allows JMetal algorithms to be used within the MOEA Framework as an
+ * {@link Algorithm}.  There is one substantial difference: since JMetal does not distinguish iterations of the
+ * algorithm, one "step" is the full execution of the algorithm.
  */
 public class JMetalAlgorithmAdapter<T extends org.uma.jmetal.solution.Solution<?>> implements Algorithm {
 
@@ -131,16 +128,6 @@ public class JMetalAlgorithmAdapter<T extends org.uma.jmetal.solution.Solution<?
 		if (solutionSet == null) {
 			solutionSet = new ArrayList<T>();
 		}
-	}
-
-	@Override
-	public Serializable getState() throws NotSerializableException {
-		throw new NotSerializableException(getClass().getName());
-	}
-
-	@Override
-	public void setState(Object state) throws NotSerializableException {
-		throw new NotSerializableException(getClass().getName());
 	}
 
 }

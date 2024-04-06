@@ -1,4 +1,4 @@
-/* Copyright 2009-2023 David Hadka
+/* Copyright 2009-2024 David Hadka
  *
  * This file is part of the MOEA Framework.
  *
@@ -101,7 +101,6 @@ public class JMetalFactory {
 		crossoverOperators = new HashMap<Class<? extends ProblemAdapter<?>>, OperatorDescriptor<CrossoverOperator<?>>>();
 		mutationOperators = new HashMap<Class<? extends ProblemAdapter<?>>, OperatorDescriptor<MutationOperator<?>>>();
 		deVariants = new TreeMap<String, DE_VARIANT>(String.CASE_INSENSITIVE_ORDER);
-
 		
 		registerCrossoverOperator(DoubleProblemAdapter.class,
 				SBXCrossover.class,
@@ -113,7 +112,6 @@ public class JMetalFactory {
 		registerCrossoverOperator(PermutationProblemAdapter.class,
 				PMXCrossover.class,
 				new DoubleParameterDescriptor("pmx.rate", 1.0));
-		
 
 		registerMutationOperator(DoubleProblemAdapter.class,
 				PolynomialMutation.class,
@@ -125,7 +123,6 @@ public class JMetalFactory {
 		registerMutationOperator(PermutationProblemAdapter.class,
 				PermutationSwapMutation.class,
 				new DoubleParameterDescriptor("swap.rate", 0.35));
-		
 		
 	    deVariants.put("rand/1/bin", DE_VARIANT.RAND_1_BIN);
 	    deVariants.put("rand/1/exp", DE_VARIANT.RAND_1_EXP);
@@ -142,8 +139,8 @@ public class JMetalFactory {
 	}
 
 	/**
-	 * Registers a crossover operator with this factory.  If a mapping already exists for the
-	 * problem type, it will be overridden.
+	 * Registers a crossover operator with this factory.  If a mapping already exists for the problem type, it will be
+	 * overridden.
 	 * 
 	 * @param problemType the JMetal problem type
 	 * @param crossoverType the crossover operator class
@@ -156,8 +153,8 @@ public class JMetalFactory {
 	}
 	
 	/**
-	 * Registers a mutation operator with this factory.  If a mapping already exists for the
-	 * problem type, it will be overridden.
+	 * Registers a mutation operator with this factory.  If a mapping already exists for the problem type, it will be
+	 * overridden.
 	 * 
 	 * @param problemType the JMetal problem type
 	 * @param mutationType the crossover operator class
@@ -170,8 +167,8 @@ public class JMetalFactory {
 	}
 	
 	/**
-	 * Evaluates the list of parameters to resolve their value.  The value will either
-	 * be the user-defined property value, if set, or the default value.
+	 * Evaluates the list of parameters to resolve their value.  The value will either be the user-defined property
+	 * value, if set, or the default value.
 	 * 
 	 * @param parameters the list of parameters
 	 * @param problem the problem adapter
@@ -195,8 +192,8 @@ public class JMetalFactory {
 	 * @param problem the problem adapter
 	 * @param properties the user-provided properties
 	 * @return the crossover operator
-	 * @throws FrameworkException if no operator was registered for the given
-	 *         problem type or an error occurred while constructing the instance
+	 * @throws FrameworkException if no operator was registered for the given problem type or an error occurred while
+	 *         constructing the instance
 	 */
 	public CrossoverOperator<?> createCrossoverOperator(ProblemAdapter<?> problem, TypedProperties properties) {
 		OperatorDescriptor<? extends CrossoverOperator<?>> operator = crossoverOperators.get(problem.getClass());
@@ -233,8 +230,8 @@ public class JMetalFactory {
 	 * @param problem the problem adapter
 	 * @param properties the user-provided properties
 	 * @return the mutation operator
-	 * @throws FrameworkException if no operator was registered for the given
-	 *         problem type or an error occurred while constructing the instance
+	 * @throws FrameworkException if no operator was registered for the given problem type or an error occurred while
+	 *         constructing the instance
 	 */
 	public MutationOperator<?> createMutationOperator(ProblemAdapter<?> problem, TypedProperties properties) {
 		OperatorDescriptor<? extends MutationOperator<?>> operator = mutationOperators.get(problem.getClass());
@@ -252,8 +249,8 @@ public class JMetalFactory {
 	}
 
 	/**
-	 * Defines a crossover or mutation operator along with its parameters.  The
-	 * type and order of the parameters will determine which constructor is invoked.
+	 * Defines a crossover or mutation operator along with its parameters.  The type and order of the parameters will
+	 * determine which constructor is invoked.
 	 *
 	 * @param <T> the base type of the operator
 	 */
@@ -348,8 +345,8 @@ public class JMetalFactory {
 		}
 		
 		/**
-		 * Resolves the value of this parameter given the user-defined properties.  Should either
-		 * return the user-defined value or the default value.
+		 * Resolves the value of this parameter given the user-defined properties.  Should either return the
+		 * user-defined value or the default value.
 		 * 
 		 * @param problem the problem adapter, providing information about the problem itself
 		 * @param properties the user-defined properties
@@ -382,8 +379,8 @@ public class JMetalFactory {
 	}
 	
 	/**
-	 * Defines a parameter of type used to represent a mutation rate. The default value
-	 * is {@code 1 / getNumberOfMutationIndices()}.
+	 * Defines a parameter of type used to represent a mutation rate. The default value is
+	 * {@code 1 / getNumberOfMutationIndices()}.
 	 */
 	public class MutationRateParameterDescriptor extends DoubleParameterDescriptor {
 		

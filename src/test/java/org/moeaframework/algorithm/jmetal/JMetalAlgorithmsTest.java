@@ -1,4 +1,4 @@
-/* Copyright 2009-2023 David Hadka
+/* Copyright 2009-2024 David Hadka
  *
  * This file is part of the MOEA Framework.
  *
@@ -26,8 +26,7 @@ import org.moeaframework.problem.ZDT.ZDT5;
 import org.moeaframework.util.TypedProperties;
 
 /**
- * Tests the {@link JMetalAlgorithms} class to ensure the JMetal algorithms
- * can be constructed and used correctly.
+ * Tests the {@link JMetalAlgorithms} class to ensure the JMetal algorithms can be constructed and used correctly.
  * 
  * Additional weight vector files can be found at:
  *   https://github.com/jMetal/jMetal/tree/jmetal-5.11/resources/weightVectorFiles

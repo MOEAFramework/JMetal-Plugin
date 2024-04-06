@@ -1,4 +1,4 @@
-/* Copyright 2009-2023 David Hadka
+/* Copyright 2009-2024 David Hadka
  *
  * This file is part of the MOEA Framework.
  *
@@ -25,9 +25,6 @@ import org.moeaframework.core.Settings;
 import org.moeaframework.core.Solution;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 
-/**
- * Tests the {@link ProblemAdapter} class.
- */
 public class ProblemAdapterTest {
 	
 	private class TestProblemAdapter<T extends org.uma.jmetal.solution.Solution<?>> extends ProblemAdapter<T> {

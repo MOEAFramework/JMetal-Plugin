@@ -1,4 +1,4 @@
-/* Copyright 2009-2023 David Hadka
+/* Copyright 2009-2024 David Hadka
  *
  * This file is part of the MOEA Framework.
  *
@@ -26,6 +26,7 @@ import java.util.stream.DoubleStream;
 import org.apache.commons.lang3.reflect.MethodUtils;
 import org.apache.commons.lang3.reflect.TypeUtils;
 import org.apache.commons.text.WordUtils;
+import org.moeaframework.algorithm.DefaultAlgorithms;
 import org.moeaframework.algorithm.jmetal.adapters.BinaryProblemAdapter;
 import org.moeaframework.algorithm.jmetal.adapters.DoubleProblemAdapter;
 import org.moeaframework.algorithm.jmetal.adapters.JMetalAlgorithmAdapter;
@@ -33,6 +34,7 @@ import org.moeaframework.algorithm.jmetal.adapters.PermutationProblemAdapter;
 import org.moeaframework.algorithm.jmetal.adapters.ProblemAdapter;
 import org.moeaframework.core.Algorithm;
 import org.moeaframework.core.Problem;
+import org.moeaframework.core.Settings;
 import org.moeaframework.core.Solution;
 import org.moeaframework.core.spi.ProviderNotFoundException;
 import org.moeaframework.core.spi.RegisteredAlgorithmProvider;
@@ -98,7 +100,7 @@ public class JMetalAlgorithms extends RegisteredAlgorithmProvider {
 	private final boolean verbose;
 
 	public JMetalAlgorithms() {
-		this(false);
+		this(Settings.isVerbose());
 	}
 	
 	public JMetalAlgorithms(boolean verbose) {
@@ -139,29 +141,6 @@ public class JMetalAlgorithms extends RegisteredAlgorithmProvider {
 			return super.getAlgorithm(name, properties, problem);
 		} catch (JMetalException e) {
 			throw new ProviderNotFoundException(name, e);
-		}
-	}
-	
-	/**
-	 * Reads the max iterations property.  The search order is:
-	 * <ol>
-	 *   <li>The property {@code maxIterations}
-	 *   <li>Derived from {@code maxEvaluations / populationSize}
-	 *   <li>Derived from {@code maxEvaluations / swarmSize} (for PSO algorithms)
-	 *   <li>Default to 250
-	 * </ol>
-	 * 
-	 * @param properties the user-defined properties
-	 * @return the max iterations
-	 */
-	private int getMaxIterations(TypedProperties properties) {
-		if (properties.contains("maxIterations")) {
-			return (int)properties.getDouble("maxIterations", 0);
-		} else {
-			int maxEvaluations = (int)properties.getDouble("maxEvaluations", 25000);
-			int populationSize = properties.getInt("populationSize", properties.getInt("swarmSize", 100));
-			
-			return maxEvaluations / populationSize;
 		}
 	}
 	
@@ -274,7 +253,7 @@ public class JMetalAlgorithms extends RegisteredAlgorithmProvider {
 							System.out.println("  > Setting property '" + property + "' to '" + value + "'");
 						}
 					} else if (property.equals("maxIterations")) {
-					    int value = getMaxIterations(properties);
+					    int value = DefaultAlgorithms.getMaxIterations(properties);
 					    MethodUtils.invokeMethod(builder, methodName, value);
 					    
 					    if (verbose) {
@@ -401,7 +380,7 @@ public class JMetalAlgorithms extends RegisteredAlgorithmProvider {
 	    
 		GWASFGA algorithm = new GWASFGA(adapter,	
 				(int)properties.getDouble("populationSize", 100),
-				getMaxIterations(properties),
+				DefaultAlgorithms.getMaxIterations(properties),
 				crossover,
 				mutation,
 				selection,
@@ -494,7 +473,7 @@ public class JMetalAlgorithms extends RegisteredAlgorithmProvider {
 		}
 
 		MOMBI algorithm = new MOMBI(adapter,
-				getMaxIterations(properties),
+				DefaultAlgorithms.getMaxIterations(properties),
 				crossover,
 				mutation,
 				selection,
@@ -516,7 +495,7 @@ public class JMetalAlgorithms extends RegisteredAlgorithmProvider {
 		}
 
 		MOMBI2 algorithm = new MOMBI2(adapter,
-				getMaxIterations(properties),
+				DefaultAlgorithms.getMaxIterations(properties),
 				crossover,
 				mutation,
 				selection,
@@ -583,11 +562,7 @@ public class JMetalAlgorithms extends RegisteredAlgorithmProvider {
 	private Algorithm newOMOPSO(TypedProperties properties, Problem problem) throws JMetalException {
 		DoubleProblemAdapter adapter = createDoubleProblemAdapter(problem);
 		
-		if (properties.contains("epsilon")) {
-			System.err.println("Warning: Parameter 'epsilon' is no longer supported in OMOPSO (JMetal)");
-		}
-		
-		int maxIterations = getMaxIterations(properties);
+		int maxIterations = DefaultAlgorithms.getMaxIterations(properties);
 		double mutationProbability = 1.0 / problem.getNumberOfVariables();
 		
 		UniformMutation uniformMutation = new UniformMutation(
@@ -603,7 +578,8 @@ public class JMetalAlgorithms extends RegisteredAlgorithmProvider {
 		
 		OMOPSOBuilder builder = new OMOPSOBuilder(adapter, evaluator)
 				.setUniformMutation(uniformMutation)
-        		.setNonUniformMutation(nonUniformMutation);
+        		.setNonUniformMutation(nonUniformMutation)
+        		.setEta(properties.getDouble("epsilon", 0.0075));
 		loadProperties(properties, builder);
 		
 		return new JMetalAlgorithmAdapter(builder.build(), properties, adapter);
@@ -700,7 +676,7 @@ public class JMetalAlgorithms extends RegisteredAlgorithmProvider {
 	    
 		WASFGA algorithm = new WASFGA(adapter,
 				(int)properties.getDouble("populationSize", 100),
-	            getMaxIterations(properties),
+				DefaultAlgorithms.getMaxIterations(properties),
 	            crossover,
 	            mutation,
 	            selection,

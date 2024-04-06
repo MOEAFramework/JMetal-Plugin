@@ -1,4 +1,4 @@
-/* Copyright 2009-2023 David Hadka
+/* Copyright 2009-2024 David Hadka
  *
  * This file is part of the MOEA Framework.
  *
@@ -22,8 +22,8 @@ import org.moeaframework.core.variable.BinaryVariable;
 import org.moeaframework.problem.AbstractProblem;
 
 /**
- * A mock problem with binary variables.  The objective of this problem is to
- * maximize the number of 1 bits in the binary string.
+ * A mock problem with binary variables.  The objective of this problem is to maximize the number of 1 bits in the
+ * binary string.
  */
 public class MockBinaryProblem extends AbstractProblem {
 

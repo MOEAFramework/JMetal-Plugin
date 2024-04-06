@@ -1,4 +1,4 @@
-/* Copyright 2009-2023 David Hadka
+/* Copyright 2009-2024 David Hadka
  *
  * This file is part of the MOEA Framework.
  *
@@ -26,9 +26,6 @@ import org.moeaframework.core.variable.EncodingUtils;
 import org.moeaframework.core.variable.RealVariable;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 
-/**
- * Tests the {@link DoubleProblemAdapter} class.
- */
 public class DoubleProblemAdapterTest {
 	
 	@Test
@@ -54,8 +51,8 @@ public class DoubleProblemAdapterTest {
 		Solution mySolution = adapter.convert(theirSolution);
 		
 		for (int i = 0; i < problem.getNumberOfVariables(); i++) {
-			Assert.assertEquals(theirSolution.variables().get(i),
-					EncodingUtils.getReal(mySolution.getVariable(i)), Settings.EPS);
+			Assert.assertEquals(theirSolution.variables().get(i), EncodingUtils.getReal(mySolution.getVariable(i)),
+					Settings.EPS);
 		}
 	}
 

@@ -1,7 +1,7 @@
 # JMetal-Plugin
 
-Extends the [MOEA Framework](http://github.com/MOEAFramework/MOEAFramework) with optimization algorithms implemented in JMetal.  If using any of the JMetal
-algorithms, please cite:
+Extends the [MOEA Framework](http://github.com/MOEAFramework/MOEAFramework) with optimization algorithms implemented in JMetal.
+If using any of the JMetal algorithms, please cite:
 
 > Antonio J. Nebro, Juan J. Durillo, and Matthieu Vergne. 2015. Redesigning the jMetal Multi-Objective Optimization Framework. In Proceedings of the Companion Publication of the 2015 Annual Conference on Genetic and Evolutionary Computation (GECCO Companion '15). Association for Computing Machinery, New York, NY, USA, 1093–1100. https://doi.org/10.1145/2739482.2768462
 
@@ -14,7 +14,7 @@ When using Maven, add the following dependency to your `pom.xml`:
 <dependency>
     <groupId>org.moeaframework</groupId>
     <artifactId>jmetal-plugin</artifactId>
-    <version>6.2.0</version>
+    <version>6.3.0</version>
 </dependency>
 ```
 
@@ -29,15 +29,15 @@ number of this project will match the supported JMetal version.  Below is a comp
 
 JMetal Version | JMetal-Plugin Latest | Supported MOEA Framework Versions | Supported Java Versions
 -------------- | -------------------- | --------------------------------- | -----------------------
-**`6.2`**      | **`6.2.0`**          | **`>= 3.6`**                      | **`>= 14`**
-`6.1`         | `6.1.0`             | `>= 3.6`                        | `>= 14`
-`6.0`         | `6.0.1`             | `>= 3.5`                        | `>= 14`
-`5.11`        | `5.11.2`            | `>= 3.2`                        | `>= 14`
+**`6.2`**      | **`6.2.1`**          | **`>= 4.0`**                      | **`>= 17`**
+`6.2`          | `6.2.0`              | `>= 3.6`                          | `>= 14`
+`6.1`          | `6.1.0`              | `>= 3.6`                          | `>= 14`
+`6.0`          | `6.0.1`              | `>= 3.5`                          | `>= 14`
+`5.11`         | `5.11.2`             | `>= 3.2`                          | `>= 14`
 
 ## Usage
 
-Once this plugin is added as a Maven dependency, you can reference JMetal algorithms as you would
-any other:
+Once this plugin is added as a Maven dependency, you can reference JMetal algorithms as you would any other:
 
 ```java
 
@@ -75,7 +75,7 @@ version by appending `-JMetal` to the name, such as `NSGAII-JMetal`.
 
 ## License
 
-Copyright 2009-2023 David Hadka and other contributors.  All rights reserved.
+Copyright 2009-2024 David Hadka and other contributors.  All rights reserved.
 
 The MOEA Framework is free software: you can redistribute it and/or modify
 it under the terms of the GNU Lesser General Public License as published by

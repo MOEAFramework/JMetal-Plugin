@@ -1,4 +1,4 @@
-/* Copyright 2009-2023 David Hadka
+/* Copyright 2009-2024 David Hadka
  *
  * This file is part of the MOEA Framework.
  *
@@ -27,9 +27,6 @@ import org.moeaframework.core.variable.EncodingUtils;
 import org.uma.jmetal.solution.binarysolution.BinarySolution;
 import org.uma.jmetal.util.binarySet.BinarySet;
 
-/**
- * Tests the {@link BinaryProblemAdapter} class.
- */
 public class BinaryProblemAdapterTest {
 	
 	@Test

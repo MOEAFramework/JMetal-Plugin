@@ -1,3 +1,20 @@
+/* Copyright 2009-2024 David Hadka
+ *
+ * This file is part of the MOEA Framework.
+ *
+ * The MOEA Framework is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or (at your
+ * option) any later version.
+ *
+ * The MOEA Framework is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with the MOEA Framework.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package org.moeaframework.problem.jmetal;
 
 import java.util.BitSet;
@@ -20,16 +37,6 @@ import org.uma.jmetal.problem.multiobjective.Tanaka;
 import org.uma.jmetal.problem.multiobjective.Viennet2;
 import org.uma.jmetal.problem.multiobjective.Viennet3;
 import org.uma.jmetal.problem.multiobjective.Viennet4;
-import org.uma.jmetal.problem.multiobjective.uf.UF1;
-import org.uma.jmetal.problem.multiobjective.uf.UF10;
-import org.uma.jmetal.problem.multiobjective.uf.UF2;
-import org.uma.jmetal.problem.multiobjective.uf.UF3;
-import org.uma.jmetal.problem.multiobjective.uf.UF4;
-import org.uma.jmetal.problem.multiobjective.uf.UF5;
-import org.uma.jmetal.problem.multiobjective.uf.UF6;
-import org.uma.jmetal.problem.multiobjective.uf.UF7;
-import org.uma.jmetal.problem.multiobjective.uf.UF8;
-import org.uma.jmetal.problem.multiobjective.uf.UF9;
 import org.uma.jmetal.problem.multiobjective.dtlz.DTLZ1;
 import org.uma.jmetal.problem.multiobjective.dtlz.DTLZ2;
 import org.uma.jmetal.problem.multiobjective.dtlz.DTLZ3;
@@ -46,6 +53,16 @@ import org.uma.jmetal.problem.multiobjective.lz09.LZ09F6;
 import org.uma.jmetal.problem.multiobjective.lz09.LZ09F7;
 import org.uma.jmetal.problem.multiobjective.lz09.LZ09F8;
 import org.uma.jmetal.problem.multiobjective.lz09.LZ09F9;
+import org.uma.jmetal.problem.multiobjective.uf.UF1;
+import org.uma.jmetal.problem.multiobjective.uf.UF10;
+import org.uma.jmetal.problem.multiobjective.uf.UF2;
+import org.uma.jmetal.problem.multiobjective.uf.UF3;
+import org.uma.jmetal.problem.multiobjective.uf.UF4;
+import org.uma.jmetal.problem.multiobjective.uf.UF5;
+import org.uma.jmetal.problem.multiobjective.uf.UF6;
+import org.uma.jmetal.problem.multiobjective.uf.UF7;
+import org.uma.jmetal.problem.multiobjective.uf.UF8;
+import org.uma.jmetal.problem.multiobjective.uf.UF9;
 import org.uma.jmetal.problem.multiobjective.wfg.WFG1;
 import org.uma.jmetal.problem.multiobjective.wfg.WFG2;
 import org.uma.jmetal.problem.multiobjective.wfg.WFG3;
@@ -185,8 +202,8 @@ public class JMetalProblems extends RegisteredProblemProvider {
 			solution.setObjectives(innerSolution.objectives());
 			solution.setConstraints(innerSolution.constraints());
 			
-			// JMetal only recognizes constraints < 0 as infeasible whereas MOEA Framework
-			// treats any non-zero value as infeasible
+			// JMetal only recognizes constraints < 0 as infeasible whereas MOEA Framework treats any non-zero value
+			// as infeasible
 			for (int i = 0; i < solution.getNumberOfConstraints(); i++) {
 				if (solution.getConstraint(i) > 0.0) {
 					solution.setConstraint(i, 0.0);
