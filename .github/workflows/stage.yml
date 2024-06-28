@@ -12,7 +12,7 @@ on:
         default: true
         type: boolean
       publish_maven:
-        description: 'Create Maven bundle'
+        description: 'Create Maven release'
         default: true
         type: boolean
       skip_validation:
