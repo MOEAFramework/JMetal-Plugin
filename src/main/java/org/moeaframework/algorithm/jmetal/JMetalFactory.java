@@ -90,7 +90,7 @@ public class JMetalFactory {
 	/**
 	 * Mapping of DE variant names.
 	 */
-	private final TreeMap<String, DE_VARIANT> deVariants;
+	private final Map<String, DE_VARIANT> deVariants;
 
 	/**
 	 * Constructs a new JMetal operator factory.

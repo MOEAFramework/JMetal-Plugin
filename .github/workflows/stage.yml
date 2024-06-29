@@ -12,7 +12,7 @@ on:
         default: true
         type: boolean
       publish_maven:
-        description: 'Create Maven bundle'
+        description: 'Create Maven release'
         default: true
         type: boolean
       skip_validation:
@@ -30,6 +30,11 @@ jobs:
         with:
           java-version: 17
           distribution: temurin
+          server-id: ossrh
+          server-username: MAVEN_USERNAME
+          server-password: MAVEN_PASSWORD
+          gpg-private-key: ${{ secrets.GPG_SIGNING_KEY }}
+          gpg-passphrase: MAVEN_GPG_PASSPHRASE
       - name: Install required software
         run: |
           sudo apt install xmlstarlet
@@ -45,36 +50,14 @@ jobs:
         run: |
           [ "${{ inputs.version }}" == "${BUILD_VERSION}" ] || (>&2 echo "Version does not match value in pom.xml"; exit -1)
           [ "${{ inputs.version }}" == "$(cat README.md | grep -m 1 '<version>' | tr -d '<>/[:alpha:][:space:]')" ] || (>&2 echo "Version does not match value in README.md"; exit -1)
-      - name: Build artifact
-        run: mvn package javadoc:jar
-      - name: Sign Maven artifacts and create bundle
+      - name: Build and stage Maven artifacts
         if: ${{ inputs.publish_maven }}
         run: |
-          echo -n "${GPG_SIGNING_KEY}" | base64 --decode | gpg --import
-
-          mkdir maven
-          cp pom.xml maven/${BUILD_ARTIFACT}.pom
-          cp target/${BUILD_ARTIFACT}.jar maven/
-          cp target/${BUILD_ARTIFACT}-sources.jar maven/
-          cp target/${BUILD_ARTIFACT}-javadoc.jar maven/
-          [ -f "target/${BUILD_ARTIFACT}-jar-with-dependencies.jar" ] && cp target/${BUILD_ARTIFACT}-jar-with-dependencies.jar maven/
-          
-          pushd maven
-          gpg -ab ${BUILD_ARTIFACT}.pom
-          gpg -ab ${BUILD_ARTIFACT}.jar
-          gpg -ab ${BUILD_ARTIFACT}-sources.jar
-          gpg -ab ${BUILD_ARTIFACT}-javadoc.jar
-          [ -f "${BUILD_ARTIFACT}-jar-with-dependencies.jar" ] && gpg -ab ${BUILD_ARTIFACT}-jar-with-dependencies.jar
-          
-          jar -cvf ${BUILD_ARTIFACT}-bundle.jar *
+          mvn --batch-mode deploy
         env:
-          GPG_SIGNING_KEY: ${{ secrets.GPG_SIGNING_KEY }}
-      - name: Upload Maven bundle
-        if: ${{ inputs.publish_maven }}
-        uses: actions/upload-artifact@v4
-        with:
-          name: Maven bundle
-          path: maven/*-bundle.jar
+          MAVEN_USERNAME: ${{ secrets.OSSRH_USERNAME }}
+          MAVEN_PASSWORD: ${{ secrets.OSSRH_TOKEN }}
+          MAVEN_GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
       - name: Stage GitHub release
         if: ${{ inputs.publish_github }}
         run: |
