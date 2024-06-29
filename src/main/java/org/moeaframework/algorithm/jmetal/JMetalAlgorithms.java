@@ -109,7 +109,7 @@ public class JMetalAlgorithms extends RegisteredAlgorithmProvider {
 		
 		register(this::newAbYSS, "AbYSS", "AbYSS-JMetal");
 		register(this::newAGEMOEA, "AGEMOEA", "AGE-MOEA", "AGEMOEA-JMetal", "AGE-MOEA-JMetal");
-		register(this::newAGEMOEAII, "AGEMOEAII", "AGE-MOEA-II", "AGEMOEAII-JMetal", "AGE-MOEA-II-JMetal");
+		register(this::newAGEMOEAII, "AGEMOEAII-JMetal", "AGE-MOEA-II-JMetal", "AGEMOEA2-JMetal");
 		register(this::newCDG, "CDG", "CDG-JMetal");
 		register(this::newDMOPSO, "DMOPSO", "DMOPSO-JMetal");
 		register(this::newESPEA, "ESPEA", "ESPEA-JMetal");
