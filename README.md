@@ -15,12 +15,16 @@ When using Maven, add the following dependency to your `pom.xml`:
     <groupId>org.moeaframework</groupId>
     <artifactId>jmetal-plugin</artifactId>
     <version>6.2.2</version>
+    <type>jar</type>
+    <classifier>jar-with-dependencies</classifier>
 </dependency>
 ```
 
-Otherwise, download and add the `.jar` file from the [Releases](https://github.com/MOEAFramework/JMetal-Plugin/releases) page
-to the classpath, which is typically the `MOEAFramework/lib/` folder.  We recommend using the `-jar-with-dependencies` file as
-it includes the appropriate JMetal version and its dependencies.
+This references the `jar-with-dependencies` to ensure the appropriate JMetal version is included.  You may also remove this
+classifier to use the regular `jar` file.
+
+If not using Maven, download and add the `.jar` file from the [Releases](https://github.com/MOEAFramework/JMetal-Plugin/releases) page
+to the classpath, which is typically the `MOEAFramework/lib/` folder.
 
 ## Supported Versions
 
