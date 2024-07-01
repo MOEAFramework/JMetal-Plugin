@@ -14,7 +14,7 @@ When using Maven, add the following dependency to your `pom.xml`:
 <dependency>
     <groupId>org.moeaframework</groupId>
     <artifactId>jmetal-plugin</artifactId>
-    <version>6.2.2</version>
+    <version>6.2.3</version>
     <type>jar</type>
     <classifier>jar-with-dependencies</classifier>
 </dependency>
