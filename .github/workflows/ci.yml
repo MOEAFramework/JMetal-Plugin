@@ -12,7 +12,6 @@ jobs:
       matrix:
         java: [ '19', '20', '21' ]
     steps:
-      - uses: actions/checkout@v4
       - name: Setup build
         uses: MOEAFramework/.github/actions/setup-build@main
         with:
