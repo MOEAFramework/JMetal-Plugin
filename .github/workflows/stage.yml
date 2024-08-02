@@ -39,6 +39,7 @@ jobs:
       - name: Get project info
         uses: MOEAFramework/.github/actions/get-project-info@main
         with:
+          expected-version: ${{ inputs.version }}
           skip-validation: ${{ inputs.skip-validation }}
       - name: Build and stage Maven artifacts
         if: ${{ inputs.publish-maven }}
