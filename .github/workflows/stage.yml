@@ -48,4 +48,4 @@ jobs:
         if: ${{ inputs.publish-github }}
         uses: MOEAFramework/.github/actions/publish-github@main
         with:
-          github-pat: ${{ secrets.PAT }}
+          github-pat: ${{ secrets.GITHUB_TOKEN }}
