@@ -15,6 +15,10 @@ on:
         description: 'Create Maven release'
         default: true
         type: boolean
+      trigger-tests:
+        description: 'Trigger integration tests'
+        default: true
+        type: boolean
       skip-validation:
         description: 'Skip version validations'
         default: false
@@ -49,3 +53,7 @@ jobs:
         uses: MOEAFramework/.github/actions/publish-github@main
         with:
           github-pat: ${{ secrets.GITHUB_TOKEN }}
+      - name: Trigger integration tests
+        uses: MOEAFramework/.github/actions/integration-test@main
+        with:
+          github-pat: ${{ secrets.PAT }}
