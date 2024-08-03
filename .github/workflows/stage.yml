@@ -55,6 +55,7 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
       - name: Trigger integration tests
+        if: ${{ inputs.trigger-tests }}
         uses: MOEAFramework/.github/actions/integration-test@main
         with:
           github-token: ${{ secrets.PAT }}
