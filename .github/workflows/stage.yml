@@ -34,7 +34,7 @@ jobs:
           java-version: 19
           email: ${{ secrets.EMAIL }}
           username: ${{ secrets.USERNAME }}
-          github-pat: ${{ secrets.PAT }}
+          github-token: ${{ secrets.PAT }}
           gpg-signing-key: ${{ secrets.GPG_SIGNING_KEY }}
       - name: Get project info
         uses: MOEAFramework/.github/actions/get-project-info@main
@@ -52,8 +52,8 @@ jobs:
         if: ${{ inputs.publish-github }}
         uses: MOEAFramework/.github/actions/publish-github@main
         with:
-          github-pat: ${{ secrets.GITHUB_TOKEN }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
       - name: Trigger integration tests
         uses: MOEAFramework/.github/actions/integration-test@main
         with:
-          github-pat: ${{ secrets.PAT }}
+          github-token: ${{ secrets.PAT }}
