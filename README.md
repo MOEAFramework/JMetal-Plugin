@@ -30,7 +30,7 @@ number of this project will match the supported JMetal version.  Below is a comp
 JMetal Version | JMetal-Plugin Latest | Supported MOEA Framework Versions | Supported Java Versions
 -------------- | -------------------- | --------------------------------- | -----------------------
 **`6.6`**      | **`>= 6.6.0`**       | **`>= 4.3`**                      | **`>= 19`**
-`6.2`         | `6.2.2`             | `>= 4.0`                         | `>= 17`
+`6.2`         | `6.2.3`             | `>= 4.0`                         | `>= 17`
 `6.2`         | `6.2.0`             | `3.6 - 3.11`                    | `>= 14`
 `6.1`         | `6.1.0`             | `3.6 - 3.11`                    | `>= 14`
 `6.0`         | `6.0.1`             | `3.5 - 3.11`                    | `>= 14`
