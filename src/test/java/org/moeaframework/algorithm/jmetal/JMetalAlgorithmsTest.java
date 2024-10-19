@@ -19,11 +19,11 @@ package org.moeaframework.algorithm.jmetal;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.moeaframework.core.Algorithm;
-import org.moeaframework.core.Problem;
+import org.moeaframework.algorithm.Algorithm;
+import org.moeaframework.core.TypedProperties;
+import org.moeaframework.problem.Problem;
 import org.moeaframework.problem.DTLZ.DTLZ2;
 import org.moeaframework.problem.ZDT.ZDT5;
-import org.moeaframework.util.TypedProperties;
 
 /**
  * Tests the {@link JMetalAlgorithms} class to ensure the JMetal algorithms can be constructed and used correctly.
@@ -111,7 +111,7 @@ public class JMetalAlgorithmsTest {
 	
 	@Test
 	public void testMOMBI() {
-		TypedProperties properties = TypedProperties.withProperty("pathWeights",
+		TypedProperties properties = TypedProperties.of("pathWeights",
 				"resources/weightVectorFiles/mombi2/weight_02D_152.sld");
 		
 		runTest("MOMBI-JMetal", properties, new DTLZ2(2));
@@ -119,7 +119,7 @@ public class JMetalAlgorithmsTest {
 	
 	@Test
 	public void testMOMBI2() {
-		TypedProperties properties = TypedProperties.withProperty("pathWeights",
+		TypedProperties properties = TypedProperties.of("pathWeights",
 				"resources/weightVectorFiles/mombi2/weight_02D_152.sld");
 		
 		runTest("MOMBI2-JMetal", properties, new DTLZ2(2));

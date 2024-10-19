@@ -20,12 +20,13 @@ package org.moeaframework.algorithm.jmetal.adapters;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.moeaframework.algorithm.Algorithm;
 import org.moeaframework.algorithm.AlgorithmException;
-import org.moeaframework.core.Algorithm;
-import org.moeaframework.core.NondominatedPopulation;
-import org.moeaframework.core.Problem;
+import org.moeaframework.algorithm.extension.Extensions;
 import org.moeaframework.core.Solution;
-import org.moeaframework.util.TypedProperties;
+import org.moeaframework.core.TypedProperties;
+import org.moeaframework.core.population.NondominatedPopulation;
+import org.moeaframework.problem.Problem;
 
 /**
  * Adapter for JMetal algorithms. This allows JMetal algorithms to be used within the MOEA Framework as an
@@ -97,13 +98,23 @@ public class JMetalAlgorithmAdapter<T extends org.uma.jmetal.solution.Solution<?
 		if (solutionSet != null) {
 			for (int i = 0; i < solutionSet.size(); i++) {
 				Solution solution = problem.convert(solutionSet.get(i));
-				solution.setObjectives(solutionSet.get(i).objectives());
-				solution.setConstraints(solutionSet.get(i).constraints());
+				solution.setObjectiveValues(solutionSet.get(i).objectives());
+				solution.setConstraintValues(solutionSet.get(i).constraints());
 				result.add(solution);
 			}
 		}
 
 		return result;
+	}
+	
+	@Override
+	public void initialize() {
+		// do nothing
+	}
+	
+	@Override
+	public boolean isInitialized() {
+		return true;
 	}
 
 	@Override
@@ -128,6 +139,11 @@ public class JMetalAlgorithmAdapter<T extends org.uma.jmetal.solution.Solution<?
 		if (solutionSet == null) {
 			solutionSet = new ArrayList<T>();
 		}
+	}
+
+	@Override
+	public Extensions getExtensions() {
+		throw new UnsupportedOperationException();
 	}
 
 }

@@ -22,6 +22,7 @@ import java.util.List;
 import java.util.function.Supplier;
 
 import org.moeaframework.core.Solution;
+import org.moeaframework.core.constraint.GreaterThanOrEqual;
 import org.moeaframework.core.spi.RegisteredProblemProvider;
 import org.moeaframework.core.variable.EncodingUtils;
 import org.moeaframework.problem.AbstractProblem;
@@ -230,21 +231,19 @@ public class JMetalProblems extends RegisteredProblemProvider {
 			
 			innerProblem.evaluate(innerSolution);
 			
-			solution.setObjectives(innerSolution.objectives());
-			solution.setConstraints(innerSolution.constraints());
-			
-			// JMetal only recognizes constraints < 0 as infeasible whereas MOEA Framework treats any non-zero value
-			// as infeasible
-			for (int i = 0; i < solution.getNumberOfConstraints(); i++) {
-				if (solution.getConstraint(i) > 0.0) {
-					solution.setConstraint(i, 0.0);
-				}
-			}
+			solution.setObjectiveValues(innerSolution.objectives());
+			solution.setConstraintValues(innerSolution.constraints());
 		}
 		
 		public Solution newSolution() {
 			Solution solution = new Solution(getNumberOfVariables(), getNumberOfObjectives(), getNumberOfConstraints());
 			initVariables(solution);
+			
+			// JMetal treats any value < 0 as violating the constraint
+			for (int i = 0; i < getNumberOfConstraints(); i++) {
+				solution.setConstraint(i, GreaterThanOrEqual.to(0.0));
+			}
+			
 			return solution;
 		}
 

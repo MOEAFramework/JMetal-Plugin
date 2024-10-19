@@ -32,10 +32,10 @@ public class MockConstraintProblem extends AbstractProblem {
 
 	@Override
 	public void evaluate(Solution solution) {
-		solution.setObjective(0, 5.0);
-		solution.setConstraint(0, -15.0);
-		solution.setConstraint(1, 0.0);
-		solution.setConstraint(2, 20.0);
+		solution.setObjectiveValue(0, 5.0);
+		solution.setConstraintValue(0, -15.0);
+		solution.setConstraintValue(1, 0.0);
+		solution.setConstraintValue(2, 20.0);
 	}
 
 	@Override

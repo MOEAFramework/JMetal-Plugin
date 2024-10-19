@@ -30,7 +30,7 @@ import org.moeaframework.algorithm.jmetal.adapters.DoubleProblemAdapter;
 import org.moeaframework.algorithm.jmetal.adapters.PermutationProblemAdapter;
 import org.moeaframework.algorithm.jmetal.adapters.ProblemAdapter;
 import org.moeaframework.core.FrameworkException;
-import org.moeaframework.util.TypedProperties;
+import org.moeaframework.core.TypedProperties;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.crossover.impl.DifferentialEvolutionCrossover;
 import org.uma.jmetal.operator.crossover.impl.DifferentialEvolutionCrossover.DE_VARIANT;
