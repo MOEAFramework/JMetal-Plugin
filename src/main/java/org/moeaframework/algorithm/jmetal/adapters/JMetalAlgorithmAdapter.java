@@ -23,6 +23,7 @@ import java.util.List;
 import org.moeaframework.algorithm.Algorithm;
 import org.moeaframework.algorithm.AlgorithmException;
 import org.moeaframework.algorithm.extension.Extensions;
+import org.moeaframework.core.Settings;
 import org.moeaframework.core.Solution;
 import org.moeaframework.core.TypedProperties;
 import org.moeaframework.core.population.NondominatedPopulation;
@@ -68,7 +69,8 @@ public class JMetalAlgorithmAdapter<T extends org.uma.jmetal.solution.Solution<?
 			ProblemAdapter<T> problem) {
 		super();
 		this.algorithm = algorithm;
-		this.maxEvaluations = (int)properties.getDouble("maxEvaluations", 25000);
+		this.maxEvaluations = (int)properties.getDouble("maxEvaluations",
+				Settings.DEFAULT_MAX_FUNCTION_EVALUATIONS);
 		this.problem = problem;
 	}
 

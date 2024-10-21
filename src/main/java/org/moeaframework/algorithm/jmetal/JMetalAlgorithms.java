@@ -33,6 +33,8 @@ import org.moeaframework.algorithm.jmetal.adapters.DoubleProblemAdapter;
 import org.moeaframework.algorithm.jmetal.adapters.JMetalAlgorithmAdapter;
 import org.moeaframework.algorithm.jmetal.adapters.PermutationProblemAdapter;
 import org.moeaframework.algorithm.jmetal.adapters.ProblemAdapter;
+import org.moeaframework.core.DefaultEpsilons;
+import org.moeaframework.core.Epsilons;
 import org.moeaframework.core.Settings;
 import org.moeaframework.core.Solution;
 import org.moeaframework.core.TypedProperties;
@@ -576,10 +578,16 @@ public class JMetalAlgorithms extends RegisteredAlgorithmProvider {
 		
 		SolutionListEvaluator evaluator = new SequentialSolutionListEvaluator();
 		
+		Epsilons epsilons = DefaultEpsilons.getInstance().getEpsilons(problem);
+		
+		if (epsilons.size() != 1) {
+			System.err.println("Multiple epsilon values configured for problem, but JMetal only supports 1");
+		}
+		
 		OMOPSOBuilder builder = new OMOPSOBuilder(adapter, evaluator)
 				.setUniformMutation(uniformMutation)
         		.setNonUniformMutation(nonUniformMutation)
-        		.setEta(properties.getDouble("epsilon", 0.0075));
+        		.setEta(properties.getDouble("epsilon", epsilons.get(0)));
 		loadProperties(properties, builder);
 		
 		return new JMetalAlgorithmAdapter(builder.build(), properties, adapter);
