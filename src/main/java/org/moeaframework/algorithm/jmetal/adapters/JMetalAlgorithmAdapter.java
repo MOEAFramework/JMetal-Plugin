@@ -22,8 +22,8 @@ import java.util.List;
 
 import org.moeaframework.algorithm.Algorithm;
 import org.moeaframework.algorithm.AlgorithmException;
+import org.moeaframework.algorithm.extension.Extension;
 import org.moeaframework.algorithm.extension.Extensions;
-import org.moeaframework.core.Settings;
 import org.moeaframework.core.Solution;
 import org.moeaframework.core.TypedProperties;
 import org.moeaframework.core.population.NondominatedPopulation;
@@ -50,6 +50,8 @@ public class JMetalAlgorithmAdapter<T extends org.uma.jmetal.solution.Solution<?
 	 * The max evaluations the algorithm is run.
 	 */
 	private final int maxEvaluations;
+	
+	private final Extensions extensions;
 
 	/**
 	 * The JMetal solution set.
@@ -69,9 +71,14 @@ public class JMetalAlgorithmAdapter<T extends org.uma.jmetal.solution.Solution<?
 			ProblemAdapter<T> problem) {
 		super();
 		this.algorithm = algorithm;
-		this.maxEvaluations = (int)properties.getDouble("maxEvaluations",
-				Settings.DEFAULT_MAX_FUNCTION_EVALUATIONS);
+		this.maxEvaluations = properties.getTruncatedInt("maxEvaluations");
 		this.problem = problem;
+		this.extensions = new JMetalExtensions(this);
+	}
+	
+	@Override
+	public String getName() {
+		return algorithm.name();
 	}
 
 	@Override
@@ -145,7 +152,20 @@ public class JMetalAlgorithmAdapter<T extends org.uma.jmetal.solution.Solution<?
 
 	@Override
 	public Extensions getExtensions() {
-		throw new UnsupportedOperationException();
+		return extensions;
+	}
+	
+	private static class JMetalExtensions extends Extensions {
+
+		public JMetalExtensions(Algorithm algorithm) {
+			super(algorithm);
+		}
+
+		@Override
+		public void add(Extension extension) {
+			throw new UnsupportedOperationException("JMetal does not support extensions");
+		}
+		
 	}
 
 }
