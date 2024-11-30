@@ -22,7 +22,6 @@ import org.junit.Test;
 import org.moeaframework.algorithm.jmetal.mocks.MockRealProblem;
 import org.moeaframework.core.Settings;
 import org.moeaframework.core.Solution;
-import org.moeaframework.core.variable.EncodingUtils;
 import org.moeaframework.core.variable.RealVariable;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 
@@ -51,7 +50,7 @@ public class DoubleProblemAdapterTest {
 		Solution mySolution = adapter.convert(theirSolution);
 		
 		for (int i = 0; i < problem.getNumberOfVariables(); i++) {
-			Assert.assertEquals(theirSolution.variables().get(i), EncodingUtils.getReal(mySolution.getVariable(i)),
+			Assert.assertEquals(theirSolution.variables().get(i), RealVariable.getReal(mySolution.getVariable(i)),
 					Settings.EPS);
 		}
 	}

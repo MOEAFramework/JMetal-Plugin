@@ -21,7 +21,6 @@ import java.util.List;
 
 import org.moeaframework.core.FrameworkException;
 import org.moeaframework.core.Solution;
-import org.moeaframework.core.variable.EncodingUtils;
 import org.moeaframework.core.variable.Permutation;
 import org.moeaframework.problem.Problem;
 import org.uma.jmetal.problem.permutationproblem.PermutationProblem;
@@ -64,7 +63,7 @@ implements PermutationProblem<PermutationSolution<Integer>> {
 			permutation[i] = permutationList.get(i);
 		}
 		
-		EncodingUtils.setPermutation(result.getVariable(0), permutation);
+		Permutation.setPermutation(result.getVariable(0), permutation);
 		return result;
 	}
 	

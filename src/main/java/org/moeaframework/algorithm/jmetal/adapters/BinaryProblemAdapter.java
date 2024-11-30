@@ -22,7 +22,6 @@ import java.util.stream.IntStream;
 
 import org.moeaframework.core.Solution;
 import org.moeaframework.core.variable.BinaryVariable;
-import org.moeaframework.core.variable.EncodingUtils;
 import org.moeaframework.problem.Problem;
 import org.uma.jmetal.problem.binaryproblem.BinaryProblem;
 import org.uma.jmetal.solution.binarysolution.BinarySolution;
@@ -82,7 +81,7 @@ public class BinaryProblemAdapter extends ProblemAdapter<BinarySolution> impleme
 		Solution result = problem.newSolution();
 		
 		for (int i = 0; i < numberOfVariables(); i++) {
-			EncodingUtils.setBitSet(result.getVariable(i), solution.variables().get(i));
+			BinaryVariable.setBitSet(result.getVariable(i), solution.variables().get(i));
 		}
 		
 		return result;

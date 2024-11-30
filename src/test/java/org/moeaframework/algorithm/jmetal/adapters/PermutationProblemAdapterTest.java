@@ -23,7 +23,7 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.moeaframework.algorithm.jmetal.mocks.MockPermutationProblem;
 import org.moeaframework.core.Solution;
-import org.moeaframework.core.variable.EncodingUtils;
+import org.moeaframework.core.variable.Permutation;
 import org.uma.jmetal.solution.permutationsolution.PermutationSolution;
 
 public class PermutationProblemAdapterTest {
@@ -47,7 +47,7 @@ public class PermutationProblemAdapterTest {
 		Solution mySolution = adapter.convert(theirSolution);
 		
 		List<Integer> theirPermutation = theirSolution.variables();
-		int[] myPermutation = EncodingUtils.getPermutation(mySolution.getVariable(0));
+		int[] myPermutation = Permutation.getPermutation(mySolution.getVariable(0));
 		
 		Assert.assertEquals(theirPermutation.size(), myPermutation.length);
 		

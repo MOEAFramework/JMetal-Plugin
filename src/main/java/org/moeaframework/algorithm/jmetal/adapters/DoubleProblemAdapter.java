@@ -21,7 +21,6 @@ import java.util.List;
 import java.util.stream.IntStream;
 
 import org.moeaframework.core.Solution;
-import org.moeaframework.core.variable.EncodingUtils;
 import org.moeaframework.core.variable.RealVariable;
 import org.moeaframework.problem.Problem;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
@@ -63,7 +62,7 @@ public class DoubleProblemAdapter extends ProblemAdapter<DoubleSolution> impleme
 		Solution result = problem.newSolution();
 		
 		for (int i = 0; i < numberOfVariables(); i++) {
-			EncodingUtils.setReal(result.getVariable(i), solution.variables().get(i));
+			RealVariable.setReal(result.getVariable(i), solution.variables().get(i));
 		}
 		
 		return result;
