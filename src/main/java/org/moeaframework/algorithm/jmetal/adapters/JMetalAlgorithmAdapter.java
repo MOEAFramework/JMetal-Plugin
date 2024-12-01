@@ -25,7 +25,6 @@ import org.moeaframework.algorithm.AlgorithmException;
 import org.moeaframework.algorithm.extension.Extension;
 import org.moeaframework.algorithm.extension.Extensions;
 import org.moeaframework.core.Solution;
-import org.moeaframework.core.TypedProperties;
 import org.moeaframework.core.population.NondominatedPopulation;
 import org.moeaframework.problem.Problem;
 
@@ -47,7 +46,7 @@ public class JMetalAlgorithmAdapter<T extends org.uma.jmetal.solution.Solution<?
 	private final ProblemAdapter<T> problem;
 	
 	/**
-	 * The max evaluations the algorithm is run.
+	 * The maximum number of function evaluations the algorithm is run.
 	 */
 	private final int maxEvaluations;
 	
@@ -62,17 +61,17 @@ public class JMetalAlgorithmAdapter<T extends org.uma.jmetal.solution.Solution<?
 	 * Constructs an adapter for the specified JMetal algorithm.
 	 * 
 	 * @param algorithm the JMetal algorithm
-	 * @param properties the properties used to configure this algorithm
 	 * @param problem the problem adapter
+	 * @param maxEvaluations the maximum number of function evaluations the algorithm is run
 	 */
 	public JMetalAlgorithmAdapter(
 			org.uma.jmetal.algorithm.Algorithm<List<T>> algorithm,
-			TypedProperties properties,
-			ProblemAdapter<T> problem) {
+			ProblemAdapter<T> problem,
+			int maxEvaluations) {
 		super();
 		this.algorithm = algorithm;
-		this.maxEvaluations = properties.getTruncatedInt("maxEvaluations");
 		this.problem = problem;
+		this.maxEvaluations = maxEvaluations;
 		this.extensions = new JMetalExtensions(this);
 	}
 	

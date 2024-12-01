@@ -281,7 +281,7 @@ public class JMetalAlgorithms extends RegisteredAlgorithmProvider {
 	    		.setMutationOperator(mutation);
 		loadProperties(properties, builder);
         
-		return new JMetalAlgorithmAdapter(builder.build(), properties, adapter);
+		return new JMetalAlgorithmAdapter(builder.build(), adapter, properties.getTruncatedInt("maxEvaluations", 25000));
 	}
 	
 	@SuppressWarnings({ "unchecked", "rawtypes" })
@@ -295,7 +295,7 @@ public class JMetalAlgorithms extends RegisteredAlgorithmProvider {
 	    		.setMutationOperator(mutation);
 		loadProperties(properties, builder);
         
-		return new JMetalAlgorithmAdapter(builder.build(), properties, adapter);
+		return new JMetalAlgorithmAdapter(builder.build(), adapter, properties.getTruncatedInt("maxEvaluations", 25000));
 	}
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
@@ -305,14 +305,14 @@ public class JMetalAlgorithms extends RegisteredAlgorithmProvider {
 		MutationOperator<?> mutation = JMetalFactory.getInstance().createMutationOperator(adapter, properties);
 
 		Archive<DoubleSolution> archive = new CrowdingDistanceArchive<DoubleSolution>(
-				(int)properties.getDouble("archiveSize", 100));
+				properties.getTruncatedInt("archiveSize", 100));
 		
 	    ABYSSBuilder builder = new ABYSSBuilder(adapter, archive)
 	    		.setCrossoverOperator((CrossoverOperator<DoubleSolution>)crossover)
 	    	    .setMutationOperator((MutationOperator<DoubleSolution>)mutation);
 	    loadProperties(properties, builder);
 	        
-	    return new JMetalAlgorithmAdapter(builder.build(), properties, adapter);
+	    return new JMetalAlgorithmAdapter(builder.build(), adapter, properties.getTruncatedInt("maxEvaluations", 25000));
 	}
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
@@ -323,7 +323,7 @@ public class JMetalAlgorithms extends RegisteredAlgorithmProvider {
 		CDGBuilder builder = new CDGBuilder(adapter).setCrossover(crossover);
 		loadProperties(properties, builder);
 	            
-		return new JMetalAlgorithmAdapter(builder.build(), properties, adapter);
+		return new JMetalAlgorithmAdapter(builder.build(), adapter, properties.getTruncatedInt("maxEvaluations", 25000));
 	}
 	
 	@SuppressWarnings({ "rawtypes", "unchecked" })
@@ -333,7 +333,7 @@ public class JMetalAlgorithms extends RegisteredAlgorithmProvider {
 		DMOPSOBuilder builder = new DMOPSOBuilder(adapter);
 		loadProperties(properties, builder);
 	            
-		return new JMetalAlgorithmAdapter(builder.build(), properties, adapter);
+		return new JMetalAlgorithmAdapter(builder.build(), adapter, properties.getTruncatedInt("maxEvaluations", 25000));
 	}
 	
 	@SuppressWarnings({ "rawtypes", "unchecked" })
@@ -345,7 +345,7 @@ public class JMetalAlgorithms extends RegisteredAlgorithmProvider {
 	    ESPEABuilder builder = new ESPEABuilder(adapter, crossover, mutation);
 		loadProperties(properties, builder);
         
-		return new JMetalAlgorithmAdapter(builder.build(), properties, adapter);
+		return new JMetalAlgorithmAdapter(builder.build(), adapter, properties.getTruncatedInt("maxEvaluations", 25000));
 	}
 	
 	@SuppressWarnings({ "rawtypes", "unchecked" })
@@ -353,13 +353,13 @@ public class JMetalAlgorithms extends RegisteredAlgorithmProvider {
 		DoubleProblemAdapter adapter = createDoubleProblemAdapter(problem);
 
 		FAME algorithm = new FAME(adapter,	
-				(int)properties.getDouble("populationSize", 100),
-				(int)properties.getDouble("archiveSize", 100),
-				(int)properties.getDouble("maxEvaluations", 25000),
+				properties.getTruncatedInt("populationSize", 100),
+				properties.getTruncatedInt("archiveSize", 100),
+				properties.getTruncatedInt("maxEvaluations", 25000),
 				new SpatialSpreadDeviationSelection<>(properties.getInt("numberOfTournaments", 5)),
 				new SequentialSolutionListEvaluator<>());
 
-		return new JMetalAlgorithmAdapter(algorithm, properties, adapter);
+		return new JMetalAlgorithmAdapter(algorithm, adapter, properties.getTruncatedInt("maxEvaluations", 25000));
 	}
 	
 	@SuppressWarnings({ "rawtypes", "unchecked" })
@@ -370,7 +370,7 @@ public class JMetalAlgorithms extends RegisteredAlgorithmProvider {
 		GDE3Builder builder = new GDE3Builder(adapter).setCrossover(crossover);
 		loadProperties(properties, builder);
 		
-		return new JMetalAlgorithmAdapter(builder.build(), properties, adapter);
+		return new JMetalAlgorithmAdapter(builder.build(), adapter, properties.getTruncatedInt("maxEvaluations", 25000));
 	}
 	
 	@SuppressWarnings({ "rawtypes", "unchecked" })
@@ -381,7 +381,7 @@ public class JMetalAlgorithms extends RegisteredAlgorithmProvider {
 	    SelectionOperator selection = new BinaryTournamentSelection(new RankingAndCrowdingDistanceComparator());
 	    
 		GWASFGA algorithm = new GWASFGA(adapter,	
-				(int)properties.getDouble("populationSize", 100),
+				properties.getTruncatedInt("populationSize", 100),
 				DefaultAlgorithms.getMaxIterations(properties),
 				crossover,
 				mutation,
@@ -389,7 +389,7 @@ public class JMetalAlgorithms extends RegisteredAlgorithmProvider {
 				new SequentialSolutionListEvaluator<DoubleSolution>(),
 				properties.getDouble("epsilon", 0.01));
 
-		return new JMetalAlgorithmAdapter(algorithm, properties, adapter);
+		return new JMetalAlgorithmAdapter(algorithm, adapter, properties.getTruncatedInt("maxEvaluations", 25000));
 	}
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
@@ -400,14 +400,14 @@ public class JMetalAlgorithms extends RegisteredAlgorithmProvider {
 	    SelectionOperator selection = new BinaryTournamentSelection();
 	    
 		IBEA algorithm = new IBEA(adapter,	
-				(int)properties.getDouble("populationSize", 100),
-				(int)properties.getDouble("archiveSize", 100),
-				(int)properties.getDouble("maxEvaluations", 25000),
+				properties.getTruncatedInt("populationSize", 100),
+				properties.getTruncatedInt("archiveSize", 100),
+				properties.getTruncatedInt("maxEvaluations", 25000),
 				selection,
 				crossover,
 				mutation);
 		
-		return new JMetalAlgorithmAdapter(algorithm, properties, adapter);
+		return new JMetalAlgorithmAdapter(algorithm, adapter, properties.getTruncatedInt("maxEvaluations", 25000));
 	}
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
@@ -420,12 +420,12 @@ public class JMetalAlgorithms extends RegisteredAlgorithmProvider {
 		
 		CrossoverOperator<?> crossover = JMetalFactory.getInstance().createCrossoverOperator(adapter, properties);
 		MutationOperator<?> mutation = JMetalFactory.getInstance().createMutationOperator(adapter, properties);
-		BoundedArchive archive = new CrowdingDistanceArchive((int)properties.getDouble("archiveSize", 100));
+		BoundedArchive archive = new CrowdingDistanceArchive(properties.getTruncatedInt("archiveSize", 100));
 		
 		MOCellBuilder builder = new MOCellBuilder(adapter, crossover, mutation).setArchive(archive);
 		loadProperties(properties, builder);
         
-		return new JMetalAlgorithmAdapter(builder.build(), properties, adapter);
+		return new JMetalAlgorithmAdapter(builder.build(), adapter, properties.getTruncatedInt("maxEvaluations", 25000));
 	}
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
@@ -437,7 +437,7 @@ public class JMetalAlgorithms extends RegisteredAlgorithmProvider {
 	    
 	    SelectionOperator parentSelection = new RandomSelection<BinarySolution>();
 	    SelectionOperator newGenerationSelection = new RankingAndCrowdingSelection<BinarySolution>(
-	    		(int)properties.getDouble("populationSize", 100));
+	    		properties.getTruncatedInt("populationSize", 100));
 
 	    MOCHCBuilder builder = new MOCHCBuilder((BinaryProblemAdapter)adapter)
 	            .setCrossover(crossover)
@@ -446,7 +446,7 @@ public class JMetalAlgorithms extends RegisteredAlgorithmProvider {
 	            .setParentSelection(parentSelection);
 	    loadProperties(properties, builder);
 	    
-		return new JMetalAlgorithmAdapter(builder.build(), properties, adapter);
+		return new JMetalAlgorithmAdapter(builder.build(), adapter, properties.getTruncatedInt("maxEvaluations", 25000));
 	}
 	
 	@SuppressWarnings({ "unchecked", "rawtypes" })
@@ -460,7 +460,7 @@ public class JMetalAlgorithms extends RegisteredAlgorithmProvider {
 		MOEADBuilder builder = new MOEADBuilder(adapter, variant).setCrossover(crossover).setMutation(mutation);
 		loadProperties(properties, builder);
 	    
-		return new JMetalAlgorithmAdapter(builder.build(), properties, adapter);
+		return new JMetalAlgorithmAdapter(builder.build(), adapter, properties.getTruncatedInt("maxEvaluations", 25000));
 	}
 	
 	@SuppressWarnings({ "rawtypes", "unchecked" })
@@ -482,7 +482,7 @@ public class JMetalAlgorithms extends RegisteredAlgorithmProvider {
 				new SequentialSolutionListEvaluator<DoubleSolution>(),
 				properties.getString("pathWeights", null));
 		
-		return new JMetalAlgorithmAdapter(algorithm, properties, adapter);
+		return new JMetalAlgorithmAdapter(algorithm, adapter, properties.getTruncatedInt("maxEvaluations", 25000));
 	}
 	
 	@SuppressWarnings({ "rawtypes", "unchecked" })
@@ -504,7 +504,7 @@ public class JMetalAlgorithms extends RegisteredAlgorithmProvider {
 				new SequentialSolutionListEvaluator<DoubleSolution>(),
 				properties.getString("pathWeights", null));
 		
-		return new JMetalAlgorithmAdapter(algorithm, properties, adapter);
+		return new JMetalAlgorithmAdapter(algorithm, adapter, properties.getTruncatedInt("maxEvaluations", 25000));
 	}
 	
 	@SuppressWarnings({ "rawtypes", "unchecked" })
@@ -521,13 +521,13 @@ public class JMetalAlgorithms extends RegisteredAlgorithmProvider {
 
 	    MOSA algorithm = new MOSA(initialSolution,
 	    		adapter,
-	    		(int)properties.getDouble("maxEvaluations", 25000),
+	    		properties.getTruncatedInt("maxEvaluations", 25000),
 	    		archive,
 	    		mutation,
 	    		1.0,
 	    		new Exponential(0.95));
 
-		return new JMetalAlgorithmAdapter(algorithm, properties, adapter);
+		return new JMetalAlgorithmAdapter(algorithm, adapter, properties.getTruncatedInt("maxEvaluations", 25000));
 	}
 	
 	@SuppressWarnings({ "unchecked", "rawtypes" })
@@ -537,10 +537,10 @@ public class JMetalAlgorithms extends RegisteredAlgorithmProvider {
 		MutationOperator<?> mutation = JMetalFactory.getInstance().createMutationOperator(adapter, properties);
 		
 		NSGAIIBuilder builder = new NSGAIIBuilder(adapter, crossover, mutation,
-				(int)properties.getDouble("populationSize", 100));
+				properties.getTruncatedInt("populationSize", 100));
 		loadProperties(properties, builder);
         
-		return new JMetalAlgorithmAdapter(builder.build(), properties, adapter);
+		return new JMetalAlgorithmAdapter(builder.build(), adapter, properties.getTruncatedInt("maxEvaluations", 25000));
 	}
 	
 	@SuppressWarnings({ "rawtypes", "unchecked" })
@@ -557,7 +557,7 @@ public class JMetalAlgorithms extends RegisteredAlgorithmProvider {
 				.setSelectionOperator(selection);
 		loadProperties(properties, builder);
 
-		return new JMetalAlgorithmAdapter(builder.build(), properties, adapter);
+		return new JMetalAlgorithmAdapter(builder.build(), adapter, properties.getTruncatedInt("maxEvaluations", 25000));
 	}
 	
 	@SuppressWarnings({ "rawtypes", "unchecked" })
@@ -590,7 +590,7 @@ public class JMetalAlgorithms extends RegisteredAlgorithmProvider {
         		.setEta(properties.getDouble("epsilon", epsilons.get(0)));
 		loadProperties(properties, builder);
 		
-		return new JMetalAlgorithmAdapter(builder.build(), properties, adapter);
+		return new JMetalAlgorithmAdapter(builder.build(), adapter, properties.getTruncatedInt("maxEvaluations", 25000));
 	}
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
@@ -599,12 +599,12 @@ public class JMetalAlgorithms extends RegisteredAlgorithmProvider {
 		MutationOperator<?> mutation = JMetalFactory.getInstance().createMutationOperator(adapter, properties);
 		
 		PAES paes = new PAES(adapter,
-				(int)properties.getDouble("maxEvaluations", 25000),
-				(int)properties.getDouble("archiveSize", 100),
-				(int)properties.getDouble("bisections", 8),
+				properties.getTruncatedInt("maxEvaluations", 25000),
+				properties.getTruncatedInt("archiveSize", 100),
+				properties.getTruncatedInt("bisections", 8),
 				mutation);
 		
-		return new JMetalAlgorithmAdapter(paes, properties, adapter);
+		return new JMetalAlgorithmAdapter(paes, adapter, properties.getTruncatedInt("maxEvaluations", 25000));
 	}
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
@@ -616,7 +616,7 @@ public class JMetalAlgorithms extends RegisteredAlgorithmProvider {
         PESA2Builder builder = new PESA2Builder(adapter, crossover, mutation);
         loadProperties(properties, builder);
         
-		return new JMetalAlgorithmAdapter(builder.build(), properties, adapter);
+		return new JMetalAlgorithmAdapter(builder.build(), adapter, properties.getTruncatedInt("maxEvaluations", 25000));
 	}
 	
 	@SuppressWarnings({ "unchecked", "rawtypes" })
@@ -632,7 +632,7 @@ public class JMetalAlgorithms extends RegisteredAlgorithmProvider {
 				properties.getDouble("epsilon", 0.01));
 		loadProperties(properties, builder);
         
-		return new JMetalAlgorithmAdapter(builder.build(), properties, adapter);
+		return new JMetalAlgorithmAdapter(builder.build(), adapter, properties.getTruncatedInt("maxEvaluations", 25000));
 	}
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
@@ -641,12 +641,12 @@ public class JMetalAlgorithms extends RegisteredAlgorithmProvider {
 		MutationOperator<DoubleSolution> mutation = (MutationOperator<DoubleSolution>)
 				JMetalFactory.getInstance().createMutationOperator(adapter, properties);
 		
-		BoundedArchive archive = new CrowdingDistanceArchive((int)properties.getDouble("archiveSize", 100));
+		BoundedArchive archive = new CrowdingDistanceArchive(properties.getTruncatedInt("archiveSize", 100));
 		
 		SMPSOBuilder builder = new SMPSOBuilder(adapter, archive).setMutation(mutation);
 		loadProperties(properties, builder);
 		
-		return new JMetalAlgorithmAdapter(builder.build(), properties, adapter);
+		return new JMetalAlgorithmAdapter(builder.build(), adapter, properties.getTruncatedInt("maxEvaluations", 25000));
 	}
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
@@ -658,7 +658,7 @@ public class JMetalAlgorithms extends RegisteredAlgorithmProvider {
 		SPEA2Builder builder = new SPEA2Builder(adapter, crossover, mutation);
 		loadProperties(properties, builder);
 		
-		return new JMetalAlgorithmAdapter(builder.build(), properties, adapter);
+		return new JMetalAlgorithmAdapter(builder.build(), adapter, properties.getTruncatedInt("maxEvaluations", 25000));
 	}
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
@@ -670,7 +670,7 @@ public class JMetalAlgorithms extends RegisteredAlgorithmProvider {
 	    SMSEMOABuilder builder = new SMSEMOABuilder(adapter, crossover, mutation);
 	    loadProperties(properties, builder);
         
-		return new JMetalAlgorithmAdapter(builder.build(), properties, adapter);
+		return new JMetalAlgorithmAdapter(builder.build(), adapter, properties.getTruncatedInt("maxEvaluations", 25000));
 	}
 	
 	@SuppressWarnings({ "rawtypes", "unchecked" })
@@ -683,7 +683,7 @@ public class JMetalAlgorithms extends RegisteredAlgorithmProvider {
 		double[] referencePoint = properties.getDoubleArray("referencePoint", new double[problem.getNumberOfObjectives()]);
 	    
 		WASFGA algorithm = new WASFGA(adapter,
-				(int)properties.getDouble("populationSize", 100),
+				properties.getTruncatedInt("populationSize", 100),
 				DefaultAlgorithms.getMaxIterations(properties),
 	            crossover,
 	            mutation,
@@ -693,7 +693,7 @@ public class JMetalAlgorithms extends RegisteredAlgorithmProvider {
 	            DoubleStream.of(referencePoint).boxed().toList(),
 	            properties.getString("weightVectorsFile", ""));
 
-		return new JMetalAlgorithmAdapter(algorithm, properties, adapter);
+		return new JMetalAlgorithmAdapter(algorithm, adapter, properties.getTruncatedInt("maxEvaluations", 25000));
 	}
 
 }

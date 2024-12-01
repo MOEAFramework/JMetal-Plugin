@@ -17,8 +17,6 @@
  */
 package org.moeaframework.algorithm.jmetal.adapters;
 
-import java.util.List;
-
 import org.junit.Assert;
 import org.junit.Test;
 import org.moeaframework.algorithm.jmetal.mocks.MockPermutationProblem;
@@ -46,13 +44,13 @@ public class PermutationProblemAdapterTest {
 		PermutationSolution<Integer> theirSolution = adapter.createSolution();
 		Solution mySolution = adapter.convert(theirSolution);
 		
-		List<Integer> theirPermutation = theirSolution.variables();
+		int[] theirPermutation = theirSolution.variables().stream().mapToInt(x -> x).toArray();
 		int[] myPermutation = Permutation.getPermutation(mySolution.getVariable(0));
 		
-		Assert.assertEquals(theirPermutation.size(), myPermutation.length);
+		Assert.assertEquals(theirPermutation.length, myPermutation.length);
 		
-		for (int i = 0; i < theirPermutation.size(); i++) {
-			Assert.assertEquals((int)theirPermutation.get(i), myPermutation[i]);
+		for (int i = 0; i < theirPermutation.length; i++) {
+			Assert.assertEquals(theirPermutation[i], myPermutation[i]);
 		}
 	}
 
