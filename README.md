@@ -29,12 +29,8 @@ number of this project will match the supported JMetal version.  Below is a comp
 
 JMetal Version | JMetal-Plugin Latest | Supported MOEA Framework Versions | Supported Java Versions
 -------------- | -------------------- | --------------------------------- | -----------------------
-<<<<<<< HEAD
-**`6.2`**     | **`6.2.3`**         | **`>= 4.0`**                    | **`>= 17`**
-=======
 **`6.6`**      | **`>= 6.6.0`**       | **`>= 5.0`**                      | **`>= 19`**
 `6.2`         | `6.2.3`             | `>= 4.0`                         | `>= 17`
->>>>>>> 1013c56e22ef1012296f6b642431a614ac8a629b
 `6.2`         | `6.2.0`             | `3.6 - 3.11`                    | `>= 14`
 `6.1`         | `6.1.0`             | `3.6 - 3.11`                    | `>= 14`
 `6.0`         | `6.0.1`             | `3.5 - 3.11`                    | `>= 14`
@@ -46,14 +42,12 @@ Once this plugin is added as a Maven dependency, you can reference JMetal algori
 
 ```java
 
-NondominatedPopulation result = new Executor()
-		.withProblem("DTLZ2_3")
-		.withAlgorithm("AbYSS")
-		.withMaxEvaluations(10000)
-		.run();
+Algorithm algorithm = AlgorithmFactory.getInstance().getAlgorithm("AbYSS", problem);
+algorithm.run(10000);
+NondominatedPopulation result = algorithm.getResult();
 ```
 
-JMetal algorithms are configured by supplying properties to the `Executor`.  We do not provide
+JMetal algorithms are configured by supplying properties to `applyConfiguration`.  We do not provide
 a listing or explanation of these properties, but an easy way to figure out what properties are available
 is to run:
 
