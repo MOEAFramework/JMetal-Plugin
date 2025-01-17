@@ -23,7 +23,7 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.moeaframework.algorithm.jmetal.mocks.MockBinaryProblem;
 import org.moeaframework.core.Solution;
-import org.moeaframework.core.variable.EncodingUtils;
+import org.moeaframework.core.variable.BinaryVariable;
 import org.uma.jmetal.solution.binarysolution.BinarySolution;
 import org.uma.jmetal.util.binarySet.BinarySet;
 
@@ -50,7 +50,7 @@ public class BinaryProblemAdapterTest {
 		
 		for (int i = 0; i < problem.getNumberOfVariables(); i++) {
 			BinarySet theirBits = theirSolution.variables().get(0);
-			BitSet myBits = EncodingUtils.getBitSet(mySolution.getVariable(i));
+			BitSet myBits = BinaryVariable.getBitSet(mySolution.getVariable(i));
 			
 			Assert.assertEquals(theirBits, myBits);
 		}

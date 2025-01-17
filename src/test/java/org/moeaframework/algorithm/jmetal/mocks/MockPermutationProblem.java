@@ -39,7 +39,7 @@ public class MockPermutationProblem extends AbstractProblem {
 			sum += i * permutation.get(i);
 		}
 		
-		solution.setObjective(0, sum);
+		solution.setObjectiveValue(0, sum);
 	}
 
 	@Override

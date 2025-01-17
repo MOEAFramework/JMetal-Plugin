@@ -37,7 +37,7 @@ public class MockRealProblem extends AbstractProblem {
 	@Override
 	public void evaluate(Solution solution) {
 		for (int i = 0; i < getNumberOfObjectives(); i++) {
-			solution.setObjective(i, 5.0);
+			solution.setObjectiveValue(i, 5.0);
 		}
 	}
 

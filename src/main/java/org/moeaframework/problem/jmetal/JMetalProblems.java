@@ -22,8 +22,10 @@ import java.util.List;
 import java.util.function.Supplier;
 
 import org.moeaframework.core.Solution;
+import org.moeaframework.core.constraint.GreaterThanOrEqual;
 import org.moeaframework.core.spi.RegisteredProblemProvider;
-import org.moeaframework.core.variable.EncodingUtils;
+import org.moeaframework.core.variable.BinaryVariable;
+import org.moeaframework.core.variable.RealVariable;
 import org.moeaframework.problem.AbstractProblem;
 import org.uma.jmetal.problem.binaryproblem.BinaryProblem;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
@@ -230,21 +232,19 @@ public class JMetalProblems extends RegisteredProblemProvider {
 			
 			innerProblem.evaluate(innerSolution);
 			
-			solution.setObjectives(innerSolution.objectives());
-			solution.setConstraints(innerSolution.constraints());
-			
-			// JMetal only recognizes constraints < 0 as infeasible whereas MOEA Framework treats any non-zero value
-			// as infeasible
-			for (int i = 0; i < solution.getNumberOfConstraints(); i++) {
-				if (solution.getConstraint(i) > 0.0) {
-					solution.setConstraint(i, 0.0);
-				}
-			}
+			solution.setObjectiveValues(innerSolution.objectives());
+			solution.setConstraintValues(innerSolution.constraints());
 		}
 		
 		public Solution newSolution() {
 			Solution solution = new Solution(getNumberOfVariables(), getNumberOfObjectives(), getNumberOfConstraints());
 			initVariables(solution);
+			
+			// JMetal treats any value < 0 as violating the constraint
+			for (int i = 0; i < getNumberOfConstraints(); i++) {
+				solution.setConstraint(i, GreaterThanOrEqual.to(0.0));
+			}
+			
 			return solution;
 		}
 
@@ -264,7 +264,7 @@ public class JMetalProblems extends RegisteredProblemProvider {
 		@Override
 		public void convert(Solution solution, DoubleSolution otherSolution) {
 			for (int i = 0; i < solution.getNumberOfVariables(); i++) {
-				otherSolution.variables().set(i, EncodingUtils.getReal(solution.getVariable(i)));
+				otherSolution.variables().set(i, RealVariable.getReal(solution.getVariable(i)));
 			}
 		}
 		
@@ -273,7 +273,7 @@ public class JMetalProblems extends RegisteredProblemProvider {
 			List<Bounds<Double>> bounds = innerProblem.variableBounds();
 			
 			for (int i = 0; i < getNumberOfVariables(); i++) {
-				solution.setVariable(i, EncodingUtils.newReal(bounds.get(i).getLowerBound(), bounds.get(i).getUpperBound()));
+				solution.setVariable(i, new RealVariable(bounds.get(i).getLowerBound(), bounds.get(i).getUpperBound()));
 			}
 		}
 		
@@ -288,7 +288,7 @@ public class JMetalProblems extends RegisteredProblemProvider {
 		@Override
 		public void convert(Solution solution, BinarySolution otherSolution) {
 			for (int i = 0; i < getNumberOfVariables(); i++) {
-				BitSet bits = EncodingUtils.getBitSet(solution.getVariable(i));
+				BitSet bits = BinaryVariable.getBitSet(solution.getVariable(i));
 				BinarySet binarySet = new BinarySet(bits.length());
 				
 				for (int j = 0; j < bits.length(); j++) {
@@ -302,7 +302,7 @@ public class JMetalProblems extends RegisteredProblemProvider {
 		@Override
 		public void initVariables(Solution solution) {
 			for (int i = 0; i < getNumberOfVariables(); i++) {
-				solution.setVariable(i, EncodingUtils.newBinary(innerProblem.numberOfBitsPerVariable().get(i)));
+				solution.setVariable(i, new BinaryVariable(innerProblem.numberOfBitsPerVariable().get(i)));
 			}
 		}
 		

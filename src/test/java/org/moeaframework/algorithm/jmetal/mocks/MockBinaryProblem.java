@@ -34,7 +34,7 @@ public class MockBinaryProblem extends AbstractProblem {
 	@Override
 	public void evaluate(Solution solution) {
 		BinaryVariable binary = (BinaryVariable)solution.getVariable(0);
-		solution.setObjective(0, 10 - binary.cardinality());
+		solution.setObjectiveValue(0, 10 - binary.cardinality());
 	}
 
 	@Override

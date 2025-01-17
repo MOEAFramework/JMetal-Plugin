@@ -20,12 +20,12 @@ package org.moeaframework.algorithm.jmetal.adapters;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.moeaframework.algorithm.Algorithm;
 import org.moeaframework.algorithm.AlgorithmException;
-import org.moeaframework.core.Algorithm;
-import org.moeaframework.core.NondominatedPopulation;
-import org.moeaframework.core.Problem;
+import org.moeaframework.algorithm.extension.Extensions;
 import org.moeaframework.core.Solution;
-import org.moeaframework.util.TypedProperties;
+import org.moeaframework.core.population.NondominatedPopulation;
+import org.moeaframework.problem.Problem;
 
 /**
  * Adapter for JMetal algorithms. This allows JMetal algorithms to be used within the MOEA Framework as an
@@ -45,9 +45,11 @@ public class JMetalAlgorithmAdapter<T extends org.uma.jmetal.solution.Solution<?
 	private final ProblemAdapter<T> problem;
 	
 	/**
-	 * The max evaluations the algorithm is run.
+	 * The maximum number of function evaluations the algorithm is run.
 	 */
 	private final int maxEvaluations;
+	
+	private final Extensions extensions;
 
 	/**
 	 * The JMetal solution set.
@@ -58,17 +60,23 @@ public class JMetalAlgorithmAdapter<T extends org.uma.jmetal.solution.Solution<?
 	 * Constructs an adapter for the specified JMetal algorithm.
 	 * 
 	 * @param algorithm the JMetal algorithm
-	 * @param properties the properties used to configure this algorithm
 	 * @param problem the problem adapter
+	 * @param maxEvaluations the maximum number of function evaluations the algorithm is run
 	 */
 	public JMetalAlgorithmAdapter(
 			org.uma.jmetal.algorithm.Algorithm<List<T>> algorithm,
-			TypedProperties properties,
-			ProblemAdapter<T> problem) {
+			ProblemAdapter<T> problem,
+			int maxEvaluations) {
 		super();
 		this.algorithm = algorithm;
-		this.maxEvaluations = (int)properties.getDouble("maxEvaluations", 25000);
 		this.problem = problem;
+		this.maxEvaluations = maxEvaluations;
+		this.extensions = new Extensions(this);
+	}
+	
+	@Override
+	public String getName() {
+		return algorithm.name();
 	}
 
 	@Override
@@ -97,13 +105,23 @@ public class JMetalAlgorithmAdapter<T extends org.uma.jmetal.solution.Solution<?
 		if (solutionSet != null) {
 			for (int i = 0; i < solutionSet.size(); i++) {
 				Solution solution = problem.convert(solutionSet.get(i));
-				solution.setObjectives(solutionSet.get(i).objectives());
-				solution.setConstraints(solutionSet.get(i).constraints());
+				solution.setObjectiveValues(solutionSet.get(i).objectives());
+				solution.setConstraintValues(solutionSet.get(i).constraints());
 				result.add(solution);
 			}
 		}
 
 		return result;
+	}
+	
+	@Override
+	public void initialize() {
+		extensions.onInitialize();
+	}
+	
+	@Override
+	public boolean isInitialized() {
+		return true;
 	}
 
 	@Override
@@ -115,6 +133,8 @@ public class JMetalAlgorithmAdapter<T extends org.uma.jmetal.solution.Solution<?
 			} catch (Exception e) {
 				throw new AlgorithmException(this, e);
 			}
+			
+			extensions.onStep();
 		}
 	}
 
@@ -124,10 +144,17 @@ public class JMetalAlgorithmAdapter<T extends org.uma.jmetal.solution.Solution<?
 	}
 
 	@Override
-	public void terminate() {
+	public void terminate() {	
 		if (solutionSet == null) {
 			solutionSet = new ArrayList<T>();
 		}
+		
+		extensions.onTerminate();
+	}
+
+	@Override
+	public Extensions getExtensions() {
+		return extensions;
 	}
 
 }

@@ -20,9 +20,9 @@ package org.moeaframework.algorithm.jmetal.adapters;
 import org.junit.Assert;
 import org.junit.Test;
 import org.moeaframework.algorithm.jmetal.mocks.MockConstraintProblem;
-import org.moeaframework.core.Problem;
 import org.moeaframework.core.Settings;
 import org.moeaframework.core.Solution;
+import org.moeaframework.problem.Problem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 
 public class ProblemAdapterTest {

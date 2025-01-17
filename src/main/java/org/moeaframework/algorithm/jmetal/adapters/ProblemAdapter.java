@@ -17,8 +17,8 @@
  */
 package org.moeaframework.algorithm.jmetal.adapters;
 
-import org.moeaframework.core.Problem;
 import org.moeaframework.core.Solution;
+import org.moeaframework.problem.Problem;
 
 /**
  * Base class that facilitates passing MOEA Framework problems to JMetal.
@@ -103,11 +103,11 @@ implements org.uma.jmetal.problem.Problem<T> {
 		getProblem().evaluate(result);
 		
 		for (int i = 0; i < result.getNumberOfObjectives(); i++) {
-			solution.objectives()[i] = result.getObjective(i);
+			solution.objectives()[i] = result.getObjectiveValue(i);
 		}
 		
 		for (int i = 0; i < result.getNumberOfConstraints(); i++) {
-			solution.constraints()[i] = result.getConstraint(i);
+			solution.constraints()[i] = result.getConstraintValue(i);
 		}
 		
 		return solution;
